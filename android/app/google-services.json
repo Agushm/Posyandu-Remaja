@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "534408139576",
+    "firebase_url": "https://project-posyandu.firebaseio.com",
+    "project_id": "project-posyandu",
+    "storage_bucket": "project-posyandu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534408139576:android:8eb319116923f364e5e7cd",
+        "android_client_info": {
+          "package_name": "com.posyandu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534408139576-jb28sqjht5fvmo04b9sn2d0j7agoqnvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.posyandu",
+            "certificate_hash": "2dc700bb581f24c255885de5faee8202318cacaa"
+          }
+        },
+        {
+          "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4H9o73JI2r6TE3j3S6eSieuGYZv4nUJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534408139576:android:bcd289051a807da1e5e7cd",
+        "android_client_info": {
+          "package_name": "com.posyandu.kuncup_melati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534408139576-ej368u18kgp4d6ooa9ru659nqoibd0fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.posyandu.kuncup_melati",
+            "certificate_hash": "e9190f11b3dd24e1d48795f6d78ec6386940a136"
+          }
+        },
+        {
+          "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4H9o73JI2r6TE3j3S6eSieuGYZv4nUJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534408139576:android:487e344b4562af10e5e7cd",
+        "android_client_info": {
+          "package_name": "com.posyandu.posyandu_kuncup_melati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534408139576-stjpaaoo5bqb457n2jak3280pab33id9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.posyandu.posyandu_kuncup_melati",
+            "certificate_hash": "e9190f11b3dd24e1d48795f6d78ec6386940a136"
+          }
+        },
+        {
+          "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4H9o73JI2r6TE3j3S6eSieuGYZv4nUJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534408139576:android:e1674da1ca470da2e5e7cd",
+        "android_client_info": {
+          "package_name": "com.posyanduapp.posyandu_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534408139576-7cemmlc05096p5js1ehvfgu566lvr62m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.posyanduapp.posyandu_app",
+            "certificate_hash": "2dc700bb581f24c255885de5faee8202318cacaa"
+          }
+        },
+        {
+          "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4H9o73JI2r6TE3j3S6eSieuGYZv4nUJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534408139576-16tifvskr9v7au07s29nrucj2hvsfda7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
