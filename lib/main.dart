@@ -44,9 +44,7 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     registerFCM();
-    configLocalNotification();
-
-    
+    configLocalNotification();    
   }
 
   void configLocalNotification(){
@@ -182,18 +180,17 @@ class _MyAppState extends State<MyApp> {
               primaryColorBrightness: Brightness.dark,
               fontFamily: FontsFamily.sourceSansPro
         ),
-        home:SignInDemo(),
-        // home: auth.isAuth
-        //       ? IndexScreen(
-        //           email: auth.email,
-        //         )
-        //       : FutureBuilder(
-        //           future: auth.tryAutoLogin(),
-        //           builder: (ctx, authResultSnap) =>
-        //               authResultSnap.connectionState == ConnectionState.waiting
-        //                   ? SplashScreen()
-        //                   : WelcomeScreen(),
-        //         ),
+        home: auth.isAuth
+              ? IndexScreen(
+                  email: auth.email,
+                )
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnap) =>
+                      authResultSnap.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : WelcomeScreen(),
+                ),
         onGenerateRoute: generateRoutes,
         navigatorKey: NavigationConstants.navKey,
       ),

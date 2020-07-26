@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/components/ListAnggota.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/ListAnggota.dart';
 
 class DaftarAnggotaScreen extends StatefulWidget {
   @override

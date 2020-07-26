@@ -96,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: FontsFamily.productSans,
-                                  color: Colors.redAccent,
+                                  color: ColorBase.pink,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),

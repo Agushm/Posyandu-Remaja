@@ -7,7 +7,7 @@ class ColorBase {
   static final grey = Color(0xFFFAFAFA);
   static final greyColor= Color(0xffaeaeae);
   static final greyColor2 = Color(0xffE8E8E8);
-  static final pink = Color(0xFFD71149);
+  static final pink = Color(0xFF009D57); //FFD71149
   static final bubbleChatBlue = Color(0xFFD5E9F4);
   static final darkRed = Color(0xFFD23C3C);
   static final themeColor = Color(0xfff5a623);

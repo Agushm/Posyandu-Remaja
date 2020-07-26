@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/components/PemeriksaanLain.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/components/PemeriksaanUmum.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanLain.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanUmum.dart';
 
 class AdminPemeriksaanScreen extends StatefulWidget {
   final UserModel user;

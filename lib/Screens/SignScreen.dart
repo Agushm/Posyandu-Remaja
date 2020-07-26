@@ -153,6 +153,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 10.0,
                 ),
                 _namaTextFormField(),
+                 SizedBox(
+                  height: 8.0,
+                ),
+                _tempatLahirTextFormField(),
                 SafeArea(child: _buildTglLahir()),
                 _buildGender(),
                 SizedBox(
@@ -204,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       keyboardType: TextInputType.text,
       validator: (value) {
-        if (value.isEmpty) {
+        if (value.isEmpty ||value.trim().length == 0) {
           return 'Masukan Nama Lengkap Anda';
         }
         return null;
@@ -240,19 +244,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   '${Environment.iconAssets}male.svg',
                   height: 20.0,
                   width: 20.0,
-                  color: _regisData['gender'] == 'laki-laki'
+                  color: _regisData['gender'] == 'L'
                       ? const Color(0xFF6fa1ea)
                       : Colors.grey,
                 ),
                 onPressed: () {
                   setState(() {
-                    _regisData['gender'] = 'laki-laki';
+                    _regisData['gender'] = 'P';
                   });
                 },
                 label: Text(
                   'Laki-Laki',
                   style: TextStyle(
-                      color: _regisData['gender'] == 'laki-laki'
+                      color: _regisData['gender'] == 'L'
                           ? Colors.blueAccent
                           : Colors.black),
                 ),
@@ -267,7 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   '${Environment.iconAssets}female.svg',
                   height: 20.0,
                   width: 20.0,
-                  color: _regisData['gender'] == 'perempuan'
+                  color: _regisData['gender'] == 'P'
                       ? const Color(0xFFf5bad3)
                       : Colors.grey,
                 ),
@@ -311,8 +315,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
-        if (value.isEmpty || !value.contains('@')) {
-          return 'Masukan E-mail';
+        if (value.isEmpty || !value.contains('@') ||value.trim().length == 0) {
+          return 'Masukan E-mail yang benar';
+        }
+        return null;
+      },
+      onSaved: (value) {
+        _regisData['email'] = value;
+      },
+      onFieldSubmitted: (_) {
+        FocusScope.of(context).requestFocus(_passwordFocusNode);
+      },
+    );
+  }
+
+  Widget _tempatLahirTextFormField() {
+    return TextFormField(
+      textInputAction: TextInputAction.next,
+      cursorColor: ColorBase.pink,
+      decoration: InputDecoration(
+        labelText: 'Tempat Lahir',
+        hintText: 'Tempat kelahiran anda',
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorBase.pink, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorBase.pink, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+      ),
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value.isEmpty ||value.trim().length == 0) {
+          return 'Tempat lahir harus diisi';
         }
         return null;
       },

@@ -5,7 +5,7 @@ import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/components/EditPeriksaUmum.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/EditPeriksaUmum.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:provider/provider.dart';
 

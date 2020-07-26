@@ -1,23 +1,22 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
-import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
+import 'package:posyandu_kuncup_melati/Providers/PemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
-import 'package:posyandu_kuncup_melati/Screens/User%20Menu/DetailPemeriksaanUmum.dart';
+import 'package:posyandu_kuncup_melati/Screens/UserMenu/DetailPemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:provider/provider.dart';
 
-class UserPemeriksaanUmum extends StatefulWidget {
+class UserPemeriksaanLain extends StatefulWidget {
   @override
-  _UserPemeriksaanUmumState createState() => _UserPemeriksaanUmumState();
+  _UserPemeriksaanLainState createState() => _UserPemeriksaanLainState();
 }
 
-class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
+class _UserPemeriksaanLainState extends State<UserPemeriksaanLain> {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
-    return Consumer2<UserProvider, PemeriksaanUmumProvider>(
+    return Consumer2<UserProvider, PemeriksaanLainProvider>(
       builder: (context, userProv, periksa, _) {
         if (periksa.items == null) {
           periksa.fetchPeriksaByUserId(userProv.user.userId);
@@ -93,7 +92,7 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                                     )
                                   : CircleAvatar(
                                       backgroundImage:
-                                          CachedNetworkImageProvider(userProv.user.imageUrl),
+                                          NetworkImage(userProv.user.imageUrl),
                                     ),
                             ),
                           ),
@@ -204,7 +203,7 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                         return GestureDetector(
                           onTap: (){
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DetailPemeriksaanUmum(periksa: periksa.items[index])));
+                          builder: (context) => DetailPemeriksaanLain(periksa: periksa.items[index])));
                           },
                                                   child: Container(
                             margin: EdgeInsets.only(bottom:10),

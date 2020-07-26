@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/AdminPemeriksaanScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/BuatPengumuman.dart';
-import 'package:posyandu_kuncup_melati/Screens/Admin%20Menu/DaftarAnggotaScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/DaftarAnggotaScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/BuatPengumuman.dart';
 import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/User%20Menu/PemeriksaanLainScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/User%20Menu/PemeriksaanUmumScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/User%20Menu/Remainder.dart';
+import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanLainScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanUmumScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/UserMenu/Remainder.dart';
 import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
 import 'package:posyandu_kuncup_melati/components/InWebView.dart';
 import 'package:posyandu_kuncup_melati/components/infromationDetail.dart';
