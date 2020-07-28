@@ -1,26 +1,14 @@
-import 'dart:convert';
-
 import 'package:bottom_navigation_badge/bottom_navigation_badge.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
-import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/home/HomeScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/messages/home_screen.dart';
 import 'package:posyandu_kuncup_melati/Screens/profile/ProfileScreen.dart';
-import 'package:posyandu_kuncup_melati/Services/NotificationService.dart';
-import 'package:posyandu_kuncup_melati/Utils/NotificationHelper.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'messages/MassagesHome.dart';
 
 class IndexScreen extends StatefulWidget {
-  final String email;
-  IndexScreen({this.email});
   @override
   _IndexScreenState createState() => _IndexScreenState();
 }
@@ -38,23 +26,22 @@ class _IndexScreenState extends State<IndexScreen> {
   void initState() {
     timeago.setLocaleMessages('id', timeago.IdMessages());
     _initializeBottomNavigationBar();
-      
-    getData();
+   
     super.initState();
   }
 
 
   
-  void getData()async{
-    final prefs = await SharedPreferences.getInstance();
-    final loginData = prefs.getString('loginData');
-    print(loginData);
-    if(loginData == null){
-      await Provider.of<UserProvider>(context, listen: false)
-          .fetchUserWithEmail(widget.email);
-    }
-    return;
-  }
+  //void getData()async{
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final loginData = prefs.getString('loginData');
+  //   print(loginData);
+  //   if(loginData == null){
+  //     await Provider.of<UserProvider>(context, listen: false)
+  //         .fetchUserWithEmail(widget.email);
+  //   }
+  //   return;
+  // }
   
 
   Future<void> onSelectNotification(String payload) async {
@@ -73,7 +60,7 @@ class _IndexScreenState extends State<IndexScreen> {
 
     items = [
       BottomNavigationBarItem(
-          icon: Icon(Icons.home, size: 16),
+          icon: Icon(Icons.home, size: 25),
           title: Column(
             children: <Widget>[
               SizedBox(height: 4),
@@ -81,7 +68,7 @@ class _IndexScreenState extends State<IndexScreen> {
             ],
           )),
       BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble, size: 16),
+          icon: Icon(Icons.chat_bubble, size: 25),
           title: Column(
             children: <Widget>[
               SizedBox(height: 4),
@@ -89,7 +76,7 @@ class _IndexScreenState extends State<IndexScreen> {
             ],
           )),
       BottomNavigationBarItem(
-          icon: Icon(Icons.person, size: 16),
+          icon: Icon(Icons.person, size: 25),
           title: Column(
             children: <Widget>[
               SizedBox(height: 4),

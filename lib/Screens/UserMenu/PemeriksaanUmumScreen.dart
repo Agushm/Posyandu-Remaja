@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
-import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/DetailPemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +18,10 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
-    return Consumer2<UserProvider, PemeriksaanUmumProvider>(
-      builder: (context, userProv, periksa, _) {
+    return Consumer2<AuthProvider, PeriksaProvider>(
+      builder: (context, authProv, periksa, _) {
         if (periksa.items == null) {
-          periksa.fetchPeriksaByUserId(userProv.user.userId);
+          periksa.fetchPeriksaByUserID(authProv.user.user.userID);
           return Scaffold(
             backgroundColor: ColorBase.pink,
             body: Center(
@@ -83,17 +84,20 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                             child: Container(
                               width: 100,
                               height: 100,
-                              child: userProv.user.imageUrl == ' '
+                              child: authProv.user.user.imageUrl == ''||authProv.user.user.imageUrl ==null||authProv.user.user.imageUrl =="null"
                                   ? CircleAvatar(
                                       backgroundColor: Colors.lightBlue,
                                       child: Text(
-                                        userProv.user.nama[0],
-                                        style: TextStyle(color: Colors.white),
+                                        authProv.user.user.nama[0],
+                                        style: TextStyle(color: Colors.white,
+                                        fontFamily: FontsFamily.productSans,
+                                        fontSize: 30
+                                        ),
                                       ),
                                     )
                                   : CircleAvatar(
                                       backgroundImage:
-                                          CachedNetworkImageProvider(userProv.user.imageUrl),
+                                          CachedNetworkImageProvider(authProv.user.user.imageUrl),
                                     ),
                             ),
                           ),
@@ -109,7 +113,7 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                       ),
                       Center(
                         child: Text(
-                          userProv.user.nama,
+                          authProv.user.user.nama,
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -176,7 +180,7 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Text(
-                                    'totalPeriksa',
+                                    periksa.items.length.toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -201,10 +205,12 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                     child: ListView.builder(
                       itemCount: periksa.items.length,
                       itemBuilder: (BuildContext context, int index) {
+                        final p = periksa.items[index];
                         return GestureDetector(
+                          
                           onTap: (){
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DetailPemeriksaanUmum(periksa: periksa.items[index])));
+                          builder: (context) => DetailPemeriksaanUmum(periksa:p)));
                           },
                                                   child: Container(
                             margin: EdgeInsets.only(bottom:10),
@@ -215,12 +221,27 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                               borderRadius: BorderRadius.circular(20)
                             ),
                             child:
-                                Text(formatTgl(periksa.items[index].tglPeriksa),textAlign: TextAlign.center,style: TextStyle(
-                                  color:ColorBase.white,
-                                  fontFamily: FontsFamily.productSans,
-                                  fontSize:20,
-                                  fontWeight: FontWeight.bold
-                                ),),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Center(
+                                      child: Text(formatTgl(DateTime.parse(p.tglPeriksa)),textAlign: TextAlign.center,style: TextStyle(
+                                        color:ColorBase.white,
+                                        fontFamily: FontsFamily.productSans,
+                                        fontSize:20,
+                                        fontWeight: FontWeight.bold
+                                      ),),
+                                    ),
+                                  Center(
+                                    child: Text(('Petugas: ${p.petugas.nama}'),textAlign: TextAlign.center,style: TextStyle(
+                                        color:ColorBase.white,
+                                        fontFamily: FontsFamily.productSans,
+                                        fontSize:13,
+                                        
+                                      ),),
+                                  ),
+                                  ],
+                                ),
                           ),
                         );
                       },

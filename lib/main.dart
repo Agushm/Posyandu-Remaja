@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:http/http.dart'as http;
+import 'package:animations/animations.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/Corona.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
@@ -26,6 +28,8 @@ import 'package:posyandu_kuncup_melati/config/Routes.dart';
 import 'package:provider/provider.dart';
 
 import 'Constants/Colors.dart';
+import 'Node_Providers/Periksa.dart';
+import 'Services/SharedPref.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,39 +39,43 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
-  
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  
+
   initState() {
     super.initState();
     registerFCM();
-    configLocalNotification();    
+    configLocalNotification();
   }
 
-  void configLocalNotification(){
+  void configLocalNotification() {
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
   }
-  void registerFCM(){
+
+  void registerFCM() {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        
-        if(message['data']['imageUrl']==null){
-          return NotificationService().showNotification(message,flutterLocalNotificationsPlugin);
-        }if(message['data']['imageUrl']!=null){
-           return NotificationService().showBigPictureNotificationHideExpandedLargeIcon(message,flutterLocalNotificationsPlugin);
+
+        if (message['data']['imageUrl'] == null) {
+          return NotificationService()
+              .showNotification(message, flutterLocalNotificationsPlugin);
         }
-        return NotificationService().showNotification(message,flutterLocalNotificationsPlugin);
-       
+        if (message['data']['imageUrl'] != null) {
+          return NotificationService()
+              .showBigPictureNotificationHideExpandedLargeIcon(
+                  message, flutterLocalNotificationsPlugin);
+        }
+        return NotificationService()
+            .showNotification(message, flutterLocalNotificationsPlugin);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
@@ -129,14 +137,12 @@ class _MyAppState extends State<MyApp> {
   //       0, message['notification']['title'], message['notification']['body'], platformChannelSpecifics);
   // }
 
-
-
- Future<void> onSelectNotification(String payload) async {
+  Future<void> onSelectNotification(String payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
-}
-  
+  }
+
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: ColorBase.pink));
@@ -148,12 +154,18 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
+          value: AuthProvider(),
+        ),
+         ChangeNotifierProvider.value(
+          value: PeriksaProvider(),
+        ),
+        ChangeNotifierProvider.value(
           value: Auth(),
         ),
         ChangeNotifierProvider.value(
           value: UserProvider(),
         ),
-         ChangeNotifierProvider.value(
+        ChangeNotifierProvider.value(
           value: CoronaProvider(),
         ),
         ChangeNotifierProvider.value(
@@ -169,32 +181,28 @@ class _MyAppState extends State<MyApp> {
           value: Messages(),
         ),
         ChangeNotifierProvider(create: (_) => NotificationsProvider()),
-        
       ],
-          child: Consumer<Auth>(
-            builder: (context, auth,_)=>MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: '${Dictionary.appName}',
         theme: ThemeData(
-             primaryColor: ColorBase.pink,
-              primaryColorBrightness: Brightness.dark,
-              fontFamily: FontsFamily.sourceSansPro
-        ),
-        home: auth.isAuth
-              ? IndexScreen(
-                  email: auth.email,
-                )
-              : FutureBuilder(
-                  future: auth.tryAutoLogin(),
-                  builder: (ctx, authResultSnap) =>
-                      authResultSnap.connectionState == ConnectionState.waiting
-                          ? SplashScreen()
-                          : WelcomeScreen(),
-                ),
+              scaffoldBackgroundColor: Colors.white,
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+                    transitionType: SharedAxisTransitionType.horizontal,
+                  ),
+                  TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+                    transitionType: SharedAxisTransitionType.horizontal,
+                  ),
+                },
+              ),
+              textTheme: TextTheme(),
+              primaryColor: ColorBase.pink),
+        initialRoute: '/',
         onGenerateRoute: generateRoutes,
         navigatorKey: NavigationConstants.navKey,
       ),
-          ),
     );
   }
 }
@@ -214,4 +222,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-

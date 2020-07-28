@@ -4,8 +4,10 @@ import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
+import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:posyandu_kuncup_melati/Providers/http_exception.dart';
 
@@ -20,10 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var _isLoading = false;
 
-  Map<String, dynamic> _loginData = {
-    'email': '',
-    'password': '',
-  };
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -50,24 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    try {
-      await Provider.of<Auth>(context, listen: false)
-          .loginUser(_loginData['email'], _loginData['password']);
+    
+      await Provider.of<AuthProvider>(context, listen: false)
+          .login(email :emailController.text, password:passwordController.text).then((value) {
+            if(value == "OK"){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder:(_)=>IndexScreen()));
+            }
+          });
       
-    } on HttpException catch (error) {
-      var errorMessage = 'Gagal Authentication!';
-      if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'Bukan email yang valid';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Password yang anda masukan salah';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Email belum terdaftar';
-      }
-      _showErrorDialog(errorMessage);
-    } catch (error) {
-      const errorMessage = 'Tidak dapat login. Tolong coba lagi nanti';
-      _showErrorDialog(errorMessage);
-    }
+    
 
     setState(() {
       _isLoading = false;
@@ -78,21 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorBase.pink,
-      body: _isLoading
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Image.asset(
-                    'assets/images/helicopter.png',
-                    scale: 5,
-                  ),
-                ),
-                Center(child: CircularProgressIndicator()),
-              ],
-            )
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
               child: Container(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -128,7 +105,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: 24.0,
                         ),
-                        Container(
+                        _isLoading
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: Image.asset(
+                    'assets/images/helicopter.png',
+                    scale: 5,
+                  ),
+                ),
+                Center(child: CircularProgressIndicator()),
+              ],
+            )
+          : Container(
                           width: double.infinity,
                           child: RaisedButton(
                             shape: StadiumBorder(),
@@ -157,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _emailTextFormField() {
     return TextFormField(
-      
+      controller: emailController,
       style: ConsTextStyle.loginScreenInput,
       cursorColor: ColorBase.white,
       textInputAction: TextInputAction.next,
@@ -191,9 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return null;
       },
-      onSaved: (value) {
-        _loginData['email'] = value;
-      },
+      
       onFieldSubmitted: (_) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
       },
@@ -202,6 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _passwordTextFormField() {
     return TextFormField(
+      controller: passwordController,
       cursorColor: ColorBase.white,
       style: ConsTextStyle.loginScreenInput,
       focusNode: _passwordFocusNode,
@@ -233,13 +223,11 @@ class _LoginScreenState extends State<LoginScreen> {
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value.isEmpty || value.length < 6) {
-          return 'Password yang anda masukan terlalu pendek!';
+          return 'Password minimal 6 karakter';
         }
         return null;
       },
-      onSaved: (value) {
-        _loginData['password'] = value;
-      },
+      
     );
   }
 }

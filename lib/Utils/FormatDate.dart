@@ -57,6 +57,9 @@ String formatTgl(DateTime dateTime) {
   return DateFormat('dd MMMM yyyy').format(dateTime);
 }
 
+String formatTglMysql(DateTime dateTime) {
+  return DateFormat('yyyy-MM-dd hh:mm').format(dateTime);
+}
 String formatTglFromUnix(int second){
   return DateFormat('dd MMM yyyy kk:mm').format(DateTime.fromMillisecondsSinceEpoch(second));
 }
@@ -64,4 +67,16 @@ String formatTglFromUnix(int second){
 String timeUntil(int second) {
   timeago.setLocaleMessages('id', timeago.IdMessages());
   return timeago.format(DateTime.fromMillisecondsSinceEpoch(second), locale: 'fr', allowFromNow: true);
+}
+
+List _longMonth = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+List _shortMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+String _convertToLocalMonth(int month, bool shortMonth) {
+	if (shortMonth) return _shortMonth[month -1];
+	return _longMonth[month - 1];
+}
+
+String tanggal(DateTime date, {bool shortMonth=false}) {
+	return "${date.day} ${_convertToLocalMonth(date.month, shortMonth)} ${date.year}";
 }

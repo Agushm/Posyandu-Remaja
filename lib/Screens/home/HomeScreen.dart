@@ -78,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                         margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                         child: BannerListSlider()),
-                    Container(
-                      color: ColorBase.white,
-                      child: StatusCorona(),
-                    ),
+                    // Container(
+                    //   color: ColorBase.white,
+                    //   child: StatusCorona(),
+                    // ),
                     Container(
                       child:MenuList()
                     ),

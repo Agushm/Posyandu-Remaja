@@ -8,6 +8,7 @@ import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/components/InWebView.dart';
 import 'package:provider/provider.dart';
@@ -64,13 +65,14 @@ class _MenuListState extends State<MenuList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildButtonColumn('${Environment.iconAssets}report.png',
-                  'Pemeriksaan Rutin', NavigationConstants.PeriksaUmum),
-           _buildButtonColumn('${Environment.iconAssets}report2.png',
-                  'Pemeriksaan Lain', NavigationConstants.PeriksaLain),
+                  'Daftar Pemeriksaan', NavigationConstants.PeriksaUmum),
                    _buildButtonColumn('${Environment.iconAssets}covid-shield.png',
-                  'Remainder', NavigationConstants.Remainder),
+                  'Saran Menu', NavigationConstants.Remainder),
                   _buildButtonColumn('${Environment.iconAssets}covid-shield.png',
-                  'Info Covid-19', 'http://covid19.karanganyarkab.go.id/',openBrowser: true),
+                  'Chat Konsultasi', NavigationConstants.Remainder),
+                  _buildButtonColumn('${Environment.iconAssets}covid-shield.png',
+                  'Custom Menu Makanan', NavigationConstants.Remainder),
+                  
           
         ],
       ),
@@ -158,15 +160,15 @@ _launchUrl(String url) async {
   }
 
   Widget _buildAdminMenu(){
-    return Consumer<UserProvider>(
+    return Consumer<AuthProvider>(
       builder: (context,userProv,_){
         
         if(userProv.user == null){
-          userProv.getUserDataOffline();
+          userProv.getOfflineData();
           return Container();
         }
         if(userProv.user != null){
-          return userProv.user.role == "petugas"|| userProv.user.role =="konsultan"?Column(
+          return userProv.user.user.role == "petugas"|| userProv.user.user.role =="konsultan"?Column(
               children: <Widget>[
                 Container(
                   alignment: Alignment.topLeft,

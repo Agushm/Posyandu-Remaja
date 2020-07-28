@@ -5,13 +5,13 @@ import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
-import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
-import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatText.dart';
-import 'package:posyandu_kuncup_melati/Providers/http_exception.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final PageController controller;
+  SignUpScreen({this.controller});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -30,12 +30,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   GlobalKey<FormState> _formKey = GlobalKey();
 
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _namaController = TextEditingController();
+  TextEditingController _tempatLahirController = TextEditingController();
 
   Map<String, dynamic> _regisData = {
     'email': '',
     'password': '',
     'nama': '',
-    'role':'user',
+    'tempatLahir': '',
     'tglLahir': DateTime.now(),
     'gender': '',
   };
@@ -46,22 +49,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-    void _showErrorDialog(String message) {
+  void _showErrorDialog(String message) {
     showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-              title: Text('Terjadi Kesalahan Login'),
-              content: Text(message),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                )
-              ],
-            ),
-            );
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Terjadi Kesalahan Login'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 
   Future<Null> _selectTglPemeriksaan(BuildContext context) async {
@@ -87,20 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _isLoading
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/helicopter.png',
-                    scale: 5,
-                  ),
-                  CircularProgressIndicator(),
-                ],
-              ),
-          )
-          : _formRegister(),
+      body: _formRegister(),
     );
   }
 
@@ -131,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Text(
                   Dictionary.desa,
-                  style:TextStyle(
+                  style: TextStyle(
                     color: ColorBase.pink,
                     fontFamily: FontsFamily.productSans,
                     fontWeight: FontWeight.bold,
@@ -150,10 +140,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 _confirmPasswordTextFormField(),
                 SizedBox(
-                  height: 10.0,
+                  height: 8.0,
                 ),
                 _namaTextFormField(),
-                 SizedBox(
+                SizedBox(
                   height: 8.0,
                 ),
                 _tempatLahirTextFormField(),
@@ -162,21 +152,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: 24.0,
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: RaisedButton(
-                                    elevation: 5,
-                                    color: ColorBase.pink,
-                    onPressed: (){
-                      _submit();
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical:15),
-                      child: Text(Dictionary.signUp,style: ConsTextStyle.judulWelcomeScreen,),
-                    ),
-                    ),
-                )
+                _isLoading
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/images/helicopter.png',
+                              scale: 5,
+                            ),
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: RaisedButton(
+                          elevation: 5,
+                          color: ColorBase.pink,
+                          onPressed: () {
+                            _submit();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              Dictionary.signUp,
+                              style: ConsTextStyle.judulWelcomeScreen,
+                            ),
+                          ),
+                        ),
+                      )
               ],
             ),
           ),
@@ -187,6 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _namaTextFormField() {
     return TextFormField(
+      controller: _namaController,
       textInputAction: TextInputAction.next,
       focusNode: _namaFocusNode,
       cursorColor: ColorBase.pink,
@@ -208,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       keyboardType: TextInputType.text,
       validator: (value) {
-        if (value.isEmpty ||value.trim().length == 0) {
+        if (value.isEmpty || value.trim().length == 0) {
           return 'Masukan Nama Lengkap Anda';
         }
         return null;
@@ -225,13 +232,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-            'Jenis Kelamin'.toUpperCase(),
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 17.0,
-                color: ColorBase.pink),
-          ),
-        
+          'Jenis Kelamin'.toUpperCase(),
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 17.0,
+              color: ColorBase.pink),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -250,7 +256,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 onPressed: () {
                   setState(() {
-                    _regisData['gender'] = 'P';
+                    _regisData['gender'] = 'L';
                   });
                 },
                 label: Text(
@@ -277,12 +283,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 onPressed: () {
                   setState(() {
-                    _regisData['gender'] = 'perempuan';
+                    _regisData['gender'] = 'P';
                   });
                 },
                 label: Text('Perempuan',
                     style: TextStyle(
-                        color: _regisData['gender'] == 'perempuan'
+                        color: _regisData['gender'] == 'P'
                             ? Colors.pinkAccent
                             : Colors.black)),
               ),
@@ -295,6 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _emailTextFormField() {
     return TextFormField(
+      controller: _emailController,
       textInputAction: TextInputAction.next,
       cursorColor: ColorBase.pink,
       decoration: InputDecoration(
@@ -315,7 +322,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
-        if (value.isEmpty || !value.contains('@') ||value.trim().length == 0) {
+        if (value.isEmpty || !value.contains('@') || value.trim().length == 0) {
           return 'Masukan E-mail yang benar';
         }
         return null;
@@ -331,6 +338,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _tempatLahirTextFormField() {
     return TextFormField(
+      controller: _tempatLahirController,
       textInputAction: TextInputAction.next,
       cursorColor: ColorBase.pink,
       decoration: InputDecoration(
@@ -351,13 +359,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
-        if (value.isEmpty ||value.trim().length == 0) {
+        if (value.isEmpty || value.trim().length == 0) {
           return 'Tempat lahir harus diisi';
         }
         return null;
       },
       onSaved: (value) {
-        _regisData['email'] = value;
+        _regisData['tempatLahir'] = value;
       },
       onFieldSubmitted: (_) {
         FocusScope.of(context).requestFocus(_passwordFocusNode);
@@ -466,55 +474,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
     _formKey.currentState.save();
+    FocusScope.of(context).unfocus();
     setState(() {
       _isLoading = true;
     });
-    try {
-      await Provider.of<Auth>(context, listen: false).signup(
-          _regisData['email'],
-          _regisData['password'],
-          _regisData['nama'],
-          _regisData['gender'],
-          _regisData['tglLahir'],
-          _regisData['role']
-          );
-        showDialog(context: context,
-          builder: (ctx) => AlertDialog(
-              title: Text('Berhasil Daftar'),
-              content: Text('Silahkan login di halaman login'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.pop(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
-                  },
-                )
-              ],
-            ),
+    await Provider.of<AuthProvider>(context, listen: false)
+        .daftar(
+            email: _emailController.text,
+            password: _regisData['password'],
+            nama: _namaController.text,
+            gender: _regisData['gender'],
+            tglLahir: _regisData['tglLahir'],
+            tempatLahir: _tempatLahirController.text)
+        .then((value) {
+      if (value == "OK") {
+        widget.controller.animateToPage(
+          0,
+          duration: Duration(milliseconds: 800),
+          curve: Curves.bounceOut,
         );
-      }on HttpException catch (error){
-      var errorMessage = 'Tidak Dapat Sign Up';
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'Email telah terdaftar';
-      } else if ( error.toString().contains('WEAK_PASSWORD')){
-        errorMessage = 'Password yang anda masukan terlalu lemah';
-      }else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'Email yang anda masukan tidak valid';
       }
-      _showErrorDialog(errorMessage);
-    } 
-    catch (error) {
-    const errorMessage = 'Tidak dapat sing up . Tolong coba lagi nanti';
-    _showErrorDialog(errorMessage);
-    }
-    
-    setState(() {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
     });
-    
   }
 
   DateTime _tglnow = DateTime.now();
-
-  
 }

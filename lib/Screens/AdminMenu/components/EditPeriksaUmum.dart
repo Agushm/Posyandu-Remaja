@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
+import 'package:posyandu_kuncup_melati/models/Periksa.dart';
+import 'package:posyandu_kuncup_melati/models/user.dart';
 import 'package:provider/provider.dart';
 
 class EditPeriksaUmum extends StatefulWidget {
-  final PeriksaUmumModel periksaData;
-  final UserModel userData;
+  final Periksa periksaData;
+  final UserClass userData;
   EditPeriksaUmum({this.periksaData, this.userData});
   @override
   _EditPeriksaUmumState createState() => _EditPeriksaUmumState();
@@ -56,7 +59,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
             _hpmtController.text = widget.periksaData.hpmt.toString();
             _ttdController.text = widget.periksaData.ttd.toString();
             _tindakanController.text = widget.periksaData.tindakan.toString();
-            tglPeriksa = widget.periksaData.tglPeriksa;
+            tglPeriksa = DateTime.parse(widget.periksaData.tglPeriksa);
           });
       }
     }
@@ -75,36 +78,36 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
       _isLoading = true;
     });
     if (widget.periksaData != null) {
-      await Provider.of<PemeriksaanUmumProvider>(context, listen: false)
-          .updateProduct(widget.periksaData.id, PeriksaUmumModel(
-            id: widget.periksaData.id,
-            bb: double.parse(_bbController.text),
-            tb: double.parse(_tbController.text),
-            imt: double.parse(_imtController.text),
-            td: _tdController.text,
-            hpmt: _hpmtController.text,
-            lila: double.parse(_lilaController.text),
-            ttd: _ttdController.text,
-            userId: widget.userData.userId,
-            tglPeriksa: tglPeriksa,
-            tindakan: _tindakanController.text,
-          ));
+      // await Provider.of<PeriksaProvider>(context, listen: false)
+      //     .updateProduct(widget.periksaData.periksaId, Periksa(
+      //       periksaId: widget.periksaData.periksaId,
+      //       bb: double.parse(_bbController.text),
+      //       tb: double.parse(_tbController.text),
+      //       imt: double.parse(_imtController.text),
+      //       td: _tdController.text,
+      //       hpmt: _hpmtController.text,
+      //       lila: double.parse(_lilaController.text),
+      //       ttd: _ttdController.text,
+      //       userId: widget.userData.userId,
+      //       tglPeriksa: tglPeriksa,
+      //       tindakan: _tindakanController.text,
+      //     ));
     } else if (widget.periksaData == null) {
       try {
-        await Provider.of<PemeriksaanUmumProvider>(context, listen: false)
-            .addPeriksa( PeriksaUmumModel(
-            id: null,
-            bb: double.parse(_bbController.text),
-            tb: double.parse(_tbController.text),
-            imt: double.parse(_imtController.text),
-            td: _tdController.text,
-            hpmt: _hpmtController.text,
-            lila: double.parse(_lilaController.text),
-            ttd: _ttdController.text,
-            userId: widget.userData.userId,
-            tglPeriksa: tglPeriksa,
-            tindakan: _tindakanController.text,
-          ));
+        // await Provider.of<PemeriksaanUmumProvider>(context, listen: false)
+        //     .addPeriksa( PeriksaUmumModel(
+        //     id: null,
+        //     bb: double.parse(_bbController.text),
+        //     tb: double.parse(_tbController.text),
+        //     imt: double.parse(_imtController.text),
+        //     td: _tdController.text,
+        //     hpmt: _hpmtController.text,
+        //     lila: double.parse(_lilaController.text),
+        //     ttd: _ttdController.text,
+        //     userId: widget.userData.userId,
+        //     tglPeriksa: tglPeriksa,
+        //     tindakan: _tindakanController.text,
+        //   ));
       } catch (error) {
         await showDialog(
             context: context,

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
-import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminEditAnggota.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
+import 'package:posyandu_kuncup_melati/models/user.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -41,6 +41,7 @@ class ListAnggota extends StatelessWidget {
                 ),
               ),
               child: Container(
+                margin: EdgeInsets.only(left:10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -80,9 +81,9 @@ class ListAnggota extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, UserModel anggota) {
+  Widget _buildListTile(BuildContext context, UserClass anggota) {
     return ListTile(
-      leading: anggota.imageUrl == " "
+      leading: anggota.imageUrl == "" || anggota.imageUrl.toString() == "null" || anggota.imageUrl == null
           ? CircleAvatar(
               backgroundColor: Colors.lightBlue,
               child: Text(
@@ -94,20 +95,20 @@ class ListAnggota extends StatelessWidget {
               backgroundImage: CachedNetworkImageProvider(anggota.imageUrl),
             ),
       title: Text(anggota.nama),
-      subtitle: Text(formatTgl(anggota.tglLahir)),
+      subtitle: Text(tanggal(DateTime.parse(anggota.tglLahir))),
       trailing: Container(
         width: 90,
         child: Row(
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AdminEditAnggota(
-                            userData: anggota,
-                          )),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => AdminEditAnggota(
+                //             userData: anggota,
+                //           )),
+                // );
               },
               child: Container(
                 margin: EdgeInsets.only(top: 10),
@@ -223,29 +224,4 @@ class ListAnggota extends StatelessWidget {
     );
   }
 
-  Widget _itemTotalPeriksa({@required int totalPeriksa}) {
-    return Container(
-        width: 150,
-        decoration: BoxDecoration(
-          color: Colors.pink[50],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              'Total Anggota',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-            CircleAvatar(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(totalPeriksa.toString()),
-                ],
-              ),
-            ),
-          ],
-        ));
-  }
 }

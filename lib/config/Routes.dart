@@ -5,18 +5,43 @@ import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/DaftarAnggotaScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/BuatPengumuman.dart';
 import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/SplashScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanLainScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanUmumScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/Remainder.dart';
 import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
+import 'package:posyandu_kuncup_melati/Services/SharedPref.dart';
 import 'package:posyandu_kuncup_melati/components/InWebView.dart';
 import 'package:posyandu_kuncup_melati/components/infromationDetail.dart';
+import 'package:posyandu_kuncup_melati/models/user.dart';
 
 Route generateRoutes(RouteSettings settings) {
   // getting arguments passed
   final args = settings.arguments;
 
   switch (settings.name) {
+    case '/':
+        return MaterialPageRoute(builder: (context) {
+          return FutureBuilder<User>(
+            future: SharedPref.getUserData(),
+            builder: (ctx, snap) {
+              print('SNAP DATA =>>>>> ${snap.data}');
+              if(snap.connectionState == ConnectionState.waiting){
+                return SplashScreen();
+              }
+              if (snap.data == null &&
+                  snap.connectionState == ConnectionState.done) {
+                return WelcomeScreen();
+              }
+              if (snap.data != null &&
+                  snap.connectionState == ConnectionState.done) {
+                return IndexScreen();
+              }
+              return SplashScreen();
+            });
+          //IndexScreen();
+        });
+    
     case NavigationConstants.Browser:
       return buildRoute(
           settings,

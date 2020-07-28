@@ -136,7 +136,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
      return PageView(
       controller: _controller,
       physics: AlwaysScrollableScrollPhysics(),
-      children: <Widget>[LoginScreen(), homePage(), SignUpScreen()],
+      children: <Widget>[LoginScreen(), homePage(), SignUpScreen(controller: _controller,)],
       scrollDirection: Axis.horizontal,
     );
   }

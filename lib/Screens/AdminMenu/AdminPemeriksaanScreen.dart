@@ -3,9 +3,10 @@ import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanUmum.dart';
+import 'package:posyandu_kuncup_melati/models/user.dart';
 
 class AdminPemeriksaanScreen extends StatefulWidget {
-  final UserModel user;
+  final UserClass user;
   AdminPemeriksaanScreen({
     this.user
   });
@@ -18,7 +19,7 @@ class _AdminPemeriksaanScreenState extends State<AdminPemeriksaanScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.user.nama),
@@ -26,20 +27,21 @@ class _AdminPemeriksaanScreenState extends State<AdminPemeriksaanScreen> {
             indicatorColor: ColorBase.orange,
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.list),
-                text: 'Pemeriksaan Umum',
+                
+                text: 'Daftar Pemeriksaan',
               ),
-              Tab(
-                icon: Icon(Icons.view_list),
-                text: 'Pemeriksaan Lain',
-              ),
+              // Tab(
+              //   icon: Icon(Icons.view_list),
+              //   text: 'Pemeriksaan Lain',
+              // ),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
             PemeriksaanUmum(user: widget.user,), 
-            PemeriksaanLain(user: widget.user,)],
+            //PemeriksaanLain(user: widget.user,)
+            ],
         ),
       ),
     );
