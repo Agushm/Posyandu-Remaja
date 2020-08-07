@@ -4,7 +4,6 @@ import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/DaftarAnggotaScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/BuatPengumuman.dart';
 import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/SaranMenu/SaranMenuScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/SplashScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanLainScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanUmumScreen.dart';
@@ -58,8 +57,8 @@ Route generateRoutes(RouteSettings settings) {
       return buildRoute(settings, UserPemeriksaanUmum());
     case NavigationConstants.Remainder:
       return buildRoute(settings, RemainderWorkout());
-    case NavigationConstants.SaranMenu:
-      return buildRoute(settings, SaranMenuScreen());
+    // case NavigationConstants.SaranMenu:
+    //   return buildRoute(settings, SaranMenuScreen());
     case NavigationConstants.PeriksaLain:
       return buildRoute(settings, UserPemeriksaanLain());
     case NavigationConstants.AdminPemeriksaan:

@@ -20,4 +20,7 @@ class BaseAPI {
   static const String anggota = '$baseAPI/api/anggota/';
   static const String tambahAnggota = '$baseAPI/api/anggota/tambah';
   static const String editAnggota = '$baseAPI/api/anggota/edit';
+
+  // Saran Menu //
+  static const String saranMenu = '$baseAPI/api/saran/';
 }

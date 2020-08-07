@@ -1,14 +1,9 @@
-import 'dart:io';
-
 import 'package:animations/animations.dart';
-import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
-import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Node_Providers/Notification.dart';
@@ -21,17 +16,11 @@ import 'package:posyandu_kuncup_melati/Providers/Notifications.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
-import 'package:posyandu_kuncup_melati/Screens/GoogleSignIn.dart';
-import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/SplashScreen.dart';
-import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
 import 'package:posyandu_kuncup_melati/Services/NotificationService.dart';
 import 'package:posyandu_kuncup_melati/config/Routes.dart';
 import 'package:provider/provider.dart';
-
 import 'Constants/Colors.dart';
 import 'Node_Providers/Periksa.dart';
-import 'Services/SharedPref.dart';
 
 void main() => runApp(MyApp());
 

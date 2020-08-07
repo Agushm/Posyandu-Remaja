@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SaranMenuScreen extends StatefulWidget {
+  final String periksaID;
+  SaranMenuScreen(this.periksaID);
   @override
   _SaranMenuScreenState createState() => _SaranMenuScreenState();
 }
 
 class _SaranMenuScreenState extends State<SaranMenuScreen> {
+  @override
+  void initState() { 
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +37,11 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
             _buildMenuMakanan("Menu Malam"),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: _buildData("TOTAL","1500 kkal"),
+              child: _buildData("TOTAL", "1500 kkal"),
             ),
-            SizedBox(height: 100,)
+            SizedBox(
+              height: 100,
+            )
           ],
         ),
       ),
@@ -60,87 +69,86 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
     );
   }
 
-  Widget _buildListItemMenuMakan(String jenis,String namaMenu, String jmlKalori){
+  Widget _buildListItemMenuMakan(
+      String jenis, String namaMenu, String jmlKalori) {
     return Container(
-      margin: EdgeInsets.only(bottom:20),
+      margin: EdgeInsets.only(bottom: 20),
       child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      jenis,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          namaMenu,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          jmlKalori,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            jenis,
+            style: TextStyle(
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                namaMenu,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
                 ),
+              ),
+              Text(
+                jmlKalori,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildMenuMakanan(String waktuMakan){
+  Widget _buildMenuMakanan(String waktuMakan) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: Column(
         children: <Widget>[
           Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                    ),
-                    child: Text(
-                      waktuMakan,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                   Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: BorderSide(color: Colors.black),
-                    right: BorderSide(color: Colors.black),
-                    bottom: BorderSide(color: Colors.black),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildListItemMenuMakan("Makanan Pokok", "Bubur Ayam", "200 kkal"),
-                    _buildListItemMenuMakan("Lauk", "Tempe", "80 kkal"),
-                    _buildListItemMenuMakan("Buah", "Pisang Raja", "126 kkal"),
-                    _buildListItemMenuMakan("Minuman", "Teh Hangat", "80 kkal"),
-                  ],
-                ),
-              )
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+            ),
+            child: Text(
+              waktuMakan,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.black),
+                right: BorderSide(color: Colors.black),
+                bottom: BorderSide(color: Colors.black),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildListItemMenuMakan(
+                    "Makanan Pokok", "Bubur Ayam", "200 kkal"),
+                _buildListItemMenuMakan("Lauk", "Tempe", "80 kkal"),
+                _buildListItemMenuMakan("Buah", "Pisang Raja", "126 kkal"),
+                _buildListItemMenuMakan("Minuman", "Teh Hangat", "80 kkal"),
+              ],
+            ),
+          )
         ],
       ),
     );
-           
   }
 }
