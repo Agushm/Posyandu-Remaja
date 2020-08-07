@@ -2,6 +2,7 @@ import 'package:bottom_navigation_badge/bottom_navigation_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
+import 'package:posyandu_kuncup_melati/Screens/Notifikasi/NotifikasiScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/home/HomeScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/profile/ProfileScreen.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -14,8 +15,8 @@ class IndexScreen extends StatefulWidget {
 }
 
 class _IndexScreenState extends State<IndexScreen> {
-  
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
 
   int _currentIndex = 0;
 
@@ -26,12 +27,10 @@ class _IndexScreenState extends State<IndexScreen> {
   void initState() {
     timeago.setLocaleMessages('id', timeago.IdMessages());
     _initializeBottomNavigationBar();
-   
+
     super.initState();
   }
 
-
-  
   //void getData()async{
   //   final prefs = await SharedPreferences.getInstance();
   //   final loginData = prefs.getString('loginData');
@@ -42,7 +41,6 @@ class _IndexScreenState extends State<IndexScreen> {
   //   }
   //   return;
   // }
-  
 
   Future<void> onSelectNotification(String payload) async {
     if (payload != null) {
@@ -50,7 +48,7 @@ class _IndexScreenState extends State<IndexScreen> {
     }
   }
 
-    _initializeBottomNavigationBar() {
+  _initializeBottomNavigationBar() {
     badger = BottomNavigationBadge(
         backgroundColor: Colors.red,
         badgeShape: BottomNavigationBadgeShape.circle,
@@ -65,6 +63,14 @@ class _IndexScreenState extends State<IndexScreen> {
             children: <Widget>[
               SizedBox(height: 4),
               Text(Dictionary.home),
+            ],
+          )),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.notifications, size: 25),
+          title: Column(
+            children: <Widget>[
+              SizedBox(height: 4),
+              Text(Dictionary.notifikasi),
             ],
           )),
       BottomNavigationBarItem(
@@ -86,8 +92,6 @@ class _IndexScreenState extends State<IndexScreen> {
     ];
   }
 
- 
-
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -105,6 +109,7 @@ class _IndexScreenState extends State<IndexScreen> {
       bottomNavigationBar: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _currentIndex,
+          elevation: 2,
           type: BottomNavigationBarType.fixed,
           items: items),
     );
@@ -116,9 +121,13 @@ class _IndexScreenState extends State<IndexScreen> {
         return HomeScreen();
       case 1:
         //AnalyticsHelper.setLogEvent(Analytics.tappedMessage);
-        return MessagesHome();
+        return NotificationScreen();
 
       case 2:
+        //AnalyticsHelper.setLogEvent(Analytics.tappedMessage);
+        return MessagesHome();
+
+      case 3:
         //AnalyticsHelper.setLogEvent(Analytics.tappedFaq);
         return ProfileScreen();
 

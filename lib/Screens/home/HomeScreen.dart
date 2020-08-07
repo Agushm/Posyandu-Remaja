@@ -7,7 +7,6 @@ import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
 import 'package:posyandu_kuncup_melati/Screens/home/components/BannerListSlider.dart';
 import 'package:posyandu_kuncup_melati/Screens/home/components/InfoKesehatanScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/home/components/MenuList.dart';
-import 'package:posyandu_kuncup_melati/Screens/home/components/StatusCorona.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -60,9 +59,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   ],
-                ))
+                )),
+              
           ],
         ),
+        actions: <Widget>[
+          IconButton(
+
+            color: Colors.white,
+            onPressed: (){},
+            icon: Icon(
+              
+              Icons.notifications),
+          ),
+        ],
       ),
       body: Stack(
         children: <Widget>[

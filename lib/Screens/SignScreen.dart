@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Terjadi Kesalahan Login'),
+        title: Text('Terjadi Kesalahan Daftar'),
         content: Text(message),
         actions: <Widget>[
           FlatButton(

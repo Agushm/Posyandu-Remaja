@@ -15,9 +15,11 @@ class Dictionary {
   static String desa = "Dusun Jengglong";
   static String login = "MASUK";
   static String signUp = "DAFTAR";
+  static String tambahAnggota = "TAMBAH";
   static String editAnggota = "EDIT";
   static String buatAnggota = "BUAT";
   static String home = "Home";
+  static String notifikasi = "Notifikasi";
   static String message = "Konsultasi";
   static String profile = "Profile";
   static String corona = "Update Covid-19 Jawa Tengah";

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminEditAnggota.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/ListAnggota.dart';
 
 class DaftarAnggotaScreen extends StatefulWidget {
@@ -17,7 +18,15 @@ class _DaftarAnggotaScreenState extends State<DaftarAnggotaScreen> {
         ],
       ),
       body: ListAnggota(),
-      floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AdminEditAnggota(
+                            userData: null,
+                          )),
+                );
+      },child: Icon(Icons.add),),
     );
   }
 }

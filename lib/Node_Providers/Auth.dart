@@ -106,4 +106,11 @@ class AuthProvider with ChangeNotifier {
   void simpanData(String key, String data) {
     SharedPref.saveData(key, data);
   }
+
+  void logout(){
+    _token = null;
+    _user = null;
+    _email =null;
+    notifyListeners();
+  }
 }

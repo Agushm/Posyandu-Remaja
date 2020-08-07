@@ -22,11 +22,15 @@ class ListAnggota extends StatelessWidget {
         return Column(
           children: <Widget>[
             Expanded(
-              child: ListView.builder(
-                itemCount: anggotaProv.items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _buildListTile(context, anggotaProv.items[index]);
-                },
+              child: RefreshIndicator(
+                onRefresh: anggotaProv.fetchDaftarAnggota,
+                color: ColorBase.pink,
+                              child: ListView.builder(
+                  itemCount: anggotaProv.items.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildListTile(context, anggotaProv.items[index]);
+                  },
+                ),
               ),
             ),
             Container(
@@ -102,13 +106,13 @@ class ListAnggota extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => AdminEditAnggota(
-                //             userData: anggota,
-                //           )),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AdminEditAnggota(
+                            userData: anggota,
+                          )),
+                );
               },
               child: Container(
                 margin: EdgeInsets.only(top: 10),

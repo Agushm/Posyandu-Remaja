@@ -11,6 +11,8 @@ import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Notification.dart';
+import 'package:posyandu_kuncup_melati/Node_Providers/Pertanyaan.dart';
 import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/Corona.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
@@ -158,6 +160,12 @@ class _MyAppState extends State<MyApp> {
         ),
          ChangeNotifierProvider.value(
           value: PeriksaProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: NotificationProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: PertanyaanProvider(),
         ),
         ChangeNotifierProvider.value(
           value: Auth(),

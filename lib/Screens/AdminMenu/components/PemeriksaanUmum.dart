@@ -27,6 +27,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
     super.initState();
   }
 
+  Future<void> onRefresh(){
+    return Provider.of<PeriksaProvider>(context, listen: false).fetchPeriksaByUserID(widget.user.userID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PeriksaProvider>(
@@ -41,13 +45,17 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
           body: Column(
             children: <Widget>[
               Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical:15),
+                  child: RefreshIndicator(
+                    onRefresh: onRefresh,
+                    color: ColorBase.pink,
+                                      child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical:15),
                 itemCount: periksaProv.items.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return _itemListView(periksaProv.items[index]);
+                    return _itemListView(periksaProv.items[index]);
                 },
-              )),
+              ),
+                  )),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -93,7 +101,7 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => EditPeriksaUmum(periksaData: null, userData: widget.user)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPeriksaUmum(periksaData: null, userData: widget.user)));
             },
             child: Icon(Icons.add),
           ),
@@ -104,10 +112,21 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
 
   Widget _itemListView(Periksa periksa) {
     return Dismissible(
-      key:Key(periksa.periksaId),
+      key: UniqueKey(),
           confirmDismiss: (DismissDirection direction)async{
-             return await _showDeleteDialog(periksa);
+            
+            final delete = await _showDeleteDialog();
+            print("DELETE $delete");
+            if(delete){
+                  Provider.of<PeriksaProvider>(context,
+                        listen: false)
+                    .deletePeriksa(periksaID:periksa.periksaId);
+                    return true;
+               }else{
+                 return false;
+               }
           },
+          
           child: GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => EditPeriksaUmum(periksaData: periksa, userData: widget.user)));
@@ -205,8 +224,8 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
     );
   }
 
-  Future<bool> _showDeleteDialog(Periksa periksa) async {
-    await showDialog(
+  Future<bool> _showDeleteDialog() async {
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -221,7 +240,6 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
               ),
               onPressed: () {
                 Navigator.of(context).pop(false);
-                return false;
               },
             ),
             FlatButton(
@@ -233,12 +251,10 @@ class _PemeriksaanUmumState extends State<PemeriksaanUmum> {
                 'Hapus',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () async {
-                // await Provider.of<PeriksaProvider>(context,
-                //         listen: false)
-                //     .deletePeriksaById(periksa.id);
+              onPressed: ()  {
+               
                 Navigator.of(context).pop(true);
-                return true;
+              
               },
             ),
             

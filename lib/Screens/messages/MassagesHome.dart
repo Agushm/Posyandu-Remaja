@@ -26,23 +26,7 @@ class _MessagesHomeState extends State<MessagesHome> {
           IconButton(icon: Icon(Icons.message), onPressed: () {}),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(top: 5, left: 10),
-              child: Text(
-                "Daftar Konsultan",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.pink,
-                    fontWeight: FontWeight.bold),
-              )),
-          ListKonsultan(),
-          Divider(),
-          Expanded(child: ListRoom())
-        ],
-      ),
+      body: Center(child: Text("Comming Soon"),)
     );
   }
 }

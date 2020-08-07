@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
-import 'package:posyandu_kuncup_melati/Providers/User.dart';
-import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/PemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/models/user.dart';
 
@@ -22,6 +20,7 @@ class _AdminPemeriksaanScreenState extends State<AdminPemeriksaanScreen> {
       length: 1,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           title: Text(widget.user.nama),
           bottom: TabBar(
             indicatorColor: ColorBase.orange,

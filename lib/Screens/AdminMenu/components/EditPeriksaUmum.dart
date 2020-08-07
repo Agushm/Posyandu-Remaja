@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
-import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
-import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
-import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/models/Periksa.dart';
 import 'package:posyandu_kuncup_melati/models/user.dart';
@@ -37,7 +33,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
   TextEditingController _hpmtController = TextEditingController();
   TextEditingController _tindakanController = TextEditingController();
   DateTime tglPeriksa = DateTime.now();
-  
+
   var _isInit = true;
   var _isLoading = false;
 
@@ -46,27 +42,27 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
     //_editPeriksaUmum.id : widget.userId;
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
       if (widget.periksaData != null) {
-          setState(() {
-            _bbController.text = widget.periksaData.bb.toString();
-            _tbController.text = widget.periksaData.tb.toString();
-            _imtController.text = widget.periksaData.imt.toString();
-            _tdController.text = widget.periksaData.td.toString();
-            _lilaController.text = widget.periksaData.lila.toString();
-            _hpmtController.text = widget.periksaData.hpmt.toString();
-            _ttdController.text = widget.periksaData.ttd.toString();
-            _tindakanController.text = widget.periksaData.tindakan.toString();
-            tglPeriksa = DateTime.parse(widget.periksaData.tglPeriksa);
-          });
+        setState(() {
+          _bbController.text = widget.periksaData.bb.toString();
+          _tbController.text = widget.periksaData.tb.toString();
+          _imtController.text = widget.periksaData.imt.toString();
+          _tdController.text = widget.periksaData.td.toString();
+          _lilaController.text = widget.periksaData.lila.toString();
+          _hpmtController.text = widget.periksaData.hpmt.toString();
+          _ttdController.text = widget.periksaData.ttd.toString();
+          _tindakanController.text = widget.periksaData.tindakan.toString();
+          tglPeriksa = DateTime.parse(widget.periksaData.tglPeriksa);
+        });
       }
     }
     _isInit = false;
     super.didChangeDependencies();
   }
-
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
@@ -78,36 +74,32 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
       _isLoading = true;
     });
     if (widget.periksaData != null) {
-      // await Provider.of<PeriksaProvider>(context, listen: false)
-      //     .updateProduct(widget.periksaData.periksaId, Periksa(
-      //       periksaId: widget.periksaData.periksaId,
-      //       bb: double.parse(_bbController.text),
-      //       tb: double.parse(_tbController.text),
-      //       imt: double.parse(_imtController.text),
-      //       td: _tdController.text,
-      //       hpmt: _hpmtController.text,
-      //       lila: double.parse(_lilaController.text),
-      //       ttd: _ttdController.text,
-      //       userId: widget.userData.userId,
-      //       tglPeriksa: tglPeriksa,
-      //       tindakan: _tindakanController.text,
-      //     ));
+      await Provider.of<PeriksaProvider>(context, listen: false)
+          .updatePeriksa(dataPeriksa: {
+          "periksa_ID":widget.periksaData.periksaId,
+        "user_ID": widget.userData.userID,
+        "tb": _tbController.text,
+        "bb": _bbController.text,
+        "td": _tdController.text,
+        "lila": _lilaController.text,
+        "hpmt": null,
+        "ttd": _ttdController.text,
+        "tindakan": _tindakanController.text,
+        "tglPeriksa": tglPeriksa.toString(),
+      });
     } else if (widget.periksaData == null) {
       try {
-        // await Provider.of<PemeriksaanUmumProvider>(context, listen: false)
-        //     .addPeriksa( PeriksaUmumModel(
-        //     id: null,
-        //     bb: double.parse(_bbController.text),
-        //     tb: double.parse(_tbController.text),
-        //     imt: double.parse(_imtController.text),
-        //     td: _tdController.text,
-        //     hpmt: _hpmtController.text,
-        //     lila: double.parse(_lilaController.text),
-        //     ttd: _ttdController.text,
-        //     userId: widget.userData.userId,
-        //     tglPeriksa: tglPeriksa,
-        //     tindakan: _tindakanController.text,
-        //   ));
+        await Provider.of<PeriksaProvider>(context, listen: false)
+            .tambahPeriksa(dataPeriksa: {
+          "user_ID": widget.userData.userID,
+          "tb": _tbController.text,
+          "bb": _bbController.text,
+          "td": _tdController.text,
+          "lila": _lilaController.text,
+          "hpmt": null,
+          "ttd": _ttdController.text,
+          "tindakan": _tindakanController.text
+        });
       } catch (error) {
         await showDialog(
             context: context,
@@ -123,8 +115,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
                       },
                     ),
                   ],
-                )
-          );
+                ));
       }
     }
     setState(() {
@@ -137,8 +128,8 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text('Edit Pemeriksaan Umum'),
-        
       ),
       body: _isLoading
           ? Center(
@@ -152,40 +143,47 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
                   CircularProgressIndicator(),
                 ],
               ),
-          ) 
-          : Padding(
-              padding: EdgeInsets.all(16),
-              child: Form(
-                key: _form,
-                child: ListView(
-                  children: <Widget>[
-                    _buildTglPeriksa(),
-                    _bbTextFormField(),
-                    _tbTextFormField(),
-                    _imtTextFormField(),
-                    _tdTextFormField(),
-                    _lilaTextFormField(),
-                    _ttdTextFormField(),
-                    _hpmtTextFormField(),
-                    _tindakanTextFormField(),
-                    
-                  ],
-                ),
+            )
+          : Form(
+              key: _form,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildKategoriIMT(),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: ListView(
+                        children: <Widget>[
+                          _buildTglPeriksa(),
+                          _bbTextFormField(),
+                          _tbTextFormField(),
+                          _imtTextFormField(),
+                          _tdTextFormField(),
+                          _lilaTextFormField(),
+                          _ttdTextFormField(),
+                          _hpmtTextFormField(),
+                          _tindakanTextFormField(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            floatingActionButton: FloatingActionButton( 
-              
-
-              onPressed: () {
-              _saveForm();
-            }, child: Icon(Icons.save),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _saveForm();
+        },
+        child: Icon(Icons.save),
+      ),
     );
   }
 
   Widget _bbTextFormField() {
     return TextFormField(
       controller: _bbController,
-      decoration: InputDecoration(labelText: 'Berat Badan'),
+      decoration: InputDecoration(labelText: 'Berat Badan (kg)'),
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
       onFieldSubmitted: (_) {
@@ -194,7 +192,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
       validator: (v) {
         if (v.isEmpty) {
           return 'Berat Badan harus diisi.';
-        }else if (v.length >=4){
+        } else if (v.length >= 4) {
           return 'Maksimal 4 digit';
         }
         return null;
@@ -205,7 +203,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
   Widget _tbTextFormField() {
     return TextFormField(
       controller: _tbController,
-      decoration: InputDecoration(labelText: 'Tinggi Badan'),
+      decoration: InputDecoration(labelText: 'Tinggi Badan (cm)'),
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.number,
       focusNode: _tbFocusNode,
@@ -215,7 +213,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
       validator: (value) {
         if (value.isEmpty) {
           return 'Tinggi Badan harus diisi.';
-        }else if (value.length >=4){
+        } else if (value.length >= 4) {
           return 'Maksimal 4 digit';
         }
         return null;
@@ -224,7 +222,8 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
   }
 
   Widget _imtTextFormField() {
-    return TextFormField(
+    return widget.periksaData ==null?Container():TextFormField(
+      enabled: false,
       controller: _imtController,
       decoration: InputDecoration(labelText: 'Index Massa Tubuh'),
       textInputAction: TextInputAction.next,
@@ -336,19 +335,19 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
   }
 
   Widget _buildTglPeriksa() {
-    return Row(
+    return widget.periksaData ==null?Container():Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Text('Tanggal Periksa',
             style: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
                 fontSize: 14.0,
-                color: Colors.pink[200])),
+                color: ColorBase.pink)),
         FlatButton(
           child: Text(
             formatTgl(tglPeriksa),
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Colors.black,
             ),
           ),
           onPressed: () => _selectTglPemeriksaan(context),
@@ -357,8 +356,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
     );
   }
 
-
-Future<Null> _selectTglPemeriksaan(BuildContext context) async {
+  Future<Null> _selectTglPemeriksaan(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
       initialDate: tglPeriksa,
@@ -375,6 +373,29 @@ Future<Null> _selectTglPemeriksaan(BuildContext context) async {
     }
   }
 
-  
+  Widget _buildKategoriIMT(){
+    return  widget.periksaData ==null?Container():Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: 150,
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(5),
+                          bottomRight: Radius.circular(5)),
+                      color: widget.periksaData.kategoriImt == "normal"
+                          ? Colors.blue
+                          : ColorBase.pink,
+                    ),
+                    child: Text(
+                      widget.periksaData.kategoriImt[0].toUpperCase() +
+                          widget.periksaData.kategoriImt.substring(1),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  );
+  }
 }
 

@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/DaftarAnggotaScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/BuatPengumuman.dart';
 import 'package:posyandu_kuncup_melati/Screens/IndexScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/SaranMenu/SaranMenuScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/SplashScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanLainScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanUmumScreen.dart';
@@ -21,12 +21,12 @@ Route generateRoutes(RouteSettings settings) {
 
   switch (settings.name) {
     case '/':
-        return MaterialPageRoute(builder: (context) {
-          return FutureBuilder<User>(
+      return MaterialPageRoute(builder: (context) {
+        return FutureBuilder<User>(
             future: SharedPref.getUserData(),
             builder: (ctx, snap) {
               print('SNAP DATA =>>>>> ${snap.data}');
-              if(snap.connectionState == ConnectionState.waiting){
+              if (snap.connectionState == ConnectionState.waiting) {
                 return SplashScreen();
               }
               if (snap.data == null &&
@@ -39,9 +39,9 @@ Route generateRoutes(RouteSettings settings) {
               }
               return SplashScreen();
             });
-          //IndexScreen();
-        });
-    
+        //IndexScreen();
+      });
+
     case NavigationConstants.Browser:
       return buildRoute(
           settings,
@@ -56,11 +56,13 @@ Route generateRoutes(RouteSettings settings) {
       return buildRoute(settings, AdminBuatPengumuman());
     case NavigationConstants.PeriksaUmum:
       return buildRoute(settings, UserPemeriksaanUmum());
-      case NavigationConstants.Remainder:
+    case NavigationConstants.Remainder:
       return buildRoute(settings, RemainderWorkout());
-      case NavigationConstants.PeriksaLain:
+    case NavigationConstants.SaranMenu:
+      return buildRoute(settings, SaranMenuScreen());
+    case NavigationConstants.PeriksaLain:
       return buildRoute(settings, UserPemeriksaanLain());
-      case NavigationConstants.AdminPemeriksaan:
+    case NavigationConstants.AdminPemeriksaan:
       return buildRoute(settings, AdminPemeriksaanScreen());
     case NavigationConstants.Welcome:
       return buildRoute(settings, WelcomeScreen());

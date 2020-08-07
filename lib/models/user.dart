@@ -48,6 +48,7 @@ class UserClass {
     String tglLahir;
     String jnsKelamin;
     String role;
+    String active;
 
 
     UserClass({
@@ -59,6 +60,7 @@ class UserClass {
         this.tglLahir,
         this.jnsKelamin,
         this.role,
+        this.active
     });
 
     factory UserClass.fromJson(Map<String, dynamic> json) => UserClass(
@@ -70,6 +72,7 @@ class UserClass {
         tglLahir: json["tgl_lahir"].toString(),
         jnsKelamin: json["jns_kel"].toString(),
         role: json["role"].toString(),
+        active: json["active"].toString()
         
     );
 
@@ -82,5 +85,6 @@ class UserClass {
         "tgl_lahir": tglLahir,
         "jns_kel":jnsKelamin,
         "role":role,
+        "active":active,
     };
 }
