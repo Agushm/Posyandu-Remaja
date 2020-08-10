@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Periksa.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/models/Periksa.dart';
 import 'package:posyandu_kuncup_melati/models/user.dart';

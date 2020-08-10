@@ -5,7 +5,7 @@ import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatText.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _namaController = TextEditingController();
   TextEditingController _tempatLahirController = TextEditingController();
+  DateTime tglLahir = DateTime.now();
 
   Map<String, dynamic> _regisData = {
     'email': '',
@@ -81,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {
         _tglnow = picked;
         _regisData['tglLahir'] = picked;
+        tglLahir = picked;
         _tglText = FormatText.formatTgl(_tglnow);
       });
     }
@@ -484,7 +486,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             password: _regisData['password'],
             nama: _namaController.text,
             gender: _regisData['gender'],
-            tglLahir: _regisData['tglLahir'],
+            tglLahir: tglLahir,
             tempatLahir: _tempatLahirController.text)
         .then((value) {
       if (value == "OK") {

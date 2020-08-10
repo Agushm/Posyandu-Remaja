@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Notification.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Pertanyaan.dart';
-import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Banner.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/CustomMenu.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/InformasiProvider.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Notification.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Pertanyaan.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/SaranMenuProvider.dart';
 import 'package:posyandu_kuncup_melati/Providers/Corona.dart';
 import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/Messages.dart';
@@ -20,12 +23,11 @@ import 'package:posyandu_kuncup_melati/Services/NotificationService.dart';
 import 'package:posyandu_kuncup_melati/config/Routes.dart';
 import 'package:provider/provider.dart';
 import 'Constants/Colors.dart';
-import 'Node_Providers/Periksa.dart';
+import 'ViewModel/Periksa.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -157,13 +159,20 @@ class _MyAppState extends State<MyApp> {
           value: PertanyaanProvider(),
         ),
         ChangeNotifierProvider.value(
-          value: Auth(),
+          value: BannerProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: InformasiProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: SaranMenuProvider(),
+        ),
+        
+        ChangeNotifierProvider.value(
+          value: CustomMenu(),
         ),
         ChangeNotifierProvider.value(
           value: UserProvider(),
-        ),
-        ChangeNotifierProvider.value(
-          value: CoronaProvider(),
         ),
         ChangeNotifierProvider.value(
           value: DaftarAnggotaProvider(),

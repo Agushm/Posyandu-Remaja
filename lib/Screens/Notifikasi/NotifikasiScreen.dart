@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Notification.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Notification.dart';
 import 'package:posyandu_kuncup_melati/Screens/Pertanyaan/IndexPertanyaan.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/widgets/LoadingCenter.dart';
@@ -35,7 +35,8 @@ class NotificationScreen extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal:20,vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
                               decoration:
                                   BoxDecoration(color: Colors.grey[200]),
                               child: Text(
@@ -47,25 +48,39 @@ class NotificationScreen extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              onTap: (){
-                                if(d.periksa.jawabanId == null){
-                                  Navigator.push(context,MaterialPageRoute(builder: (_)=>PertanyaanScreen(
-                                    periksaID:d.periksaId.toString(),
-                                  )));
+                              onTap: () {
+                                if(d.periksa.jawabanId != null){
+                                  Fluttertoast.showToast(msg: "Anda sudah mengisi quisioner");
+                                }
+                                if (d.periksa.jawabanId == null) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => PertanyaanScreen(
+                                                periksaID:
+                                                    d.periksaId.toString(),
+                                              )));
                                 }
                               },
-                                                          child: Stack(
+                              child: Stack(
                                 children: <Widget>[
                                   Container(
+                                    width: double.infinity,
                                     padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      color: d.periksa.jawabanId != null?Colors.white:Colors.blue.withAlpha(50),
+                                    ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(d.judul,style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold
-                                        )),
-                                        SizedBox(height: 5,),
+                                        Text(d.judul,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
                                         Text(d.pesan)
                                       ],
                                     ),
@@ -73,18 +88,21 @@ class NotificationScreen extends StatelessWidget {
                                   Positioned(
                                     top: 10,
                                     right: 20,
-                                                                    child: Container(
+                                    child: Container(
                                       padding: EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: d.periksa.kategoriImt == "normal"?Colors.green:Colors.red,
+                                        color: d.periksa.kategoriImt == "normal"
+                                            ? Colors.green
+                                            : Colors.red,
                                       ),
-                                      child: Text(d.periksa.kategoriImt,style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.white,
-
-                                        fontWeight: FontWeight.bold
-                                      ),),
+                                      child: Text(
+                                        d.periksa.kategoriImt,
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ],

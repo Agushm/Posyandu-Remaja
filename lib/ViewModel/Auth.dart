@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:posyandu_kuncup_melati/Services/SharedPref.dart';
@@ -30,6 +31,11 @@ class AuthProvider with ChangeNotifier {
       String gender,
       DateTime tglLahir,
       String tempatLahir}) async {
+        print(email);
+        print(nama);
+        print(gender);
+        print(tempatLahir);
+        print(tglLahir);
     final uri = BaseAPI.register;
     try {
       final res = await http.post(uri,
@@ -59,12 +65,16 @@ class AuthProvider with ChangeNotifier {
 
   Future<String> login({String email, String password}) async {
     final uri = BaseAPI.login;
+    final _fcm = FirebaseMessaging();
+    var _fcmToken = await _fcm.getToken();
+
     try {
       final res = await http.post(uri,
           headers: bearerHeader(null),
           body: json.encode({
             "email": email,
             "password": password,
+            "fcm":_fcmToken
           }));
       final resData = json.decode(res.body);
       print(resData);
@@ -111,6 +121,8 @@ class AuthProvider with ChangeNotifier {
     _token = null;
     _user = null;
     _email =null;
+    SharedPref.saveData("userData", null);
     notifyListeners();
+
   }
 }

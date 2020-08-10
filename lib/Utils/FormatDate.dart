@@ -66,7 +66,7 @@ String formatTglFromUnix(int second){
 
 String timeUntil(int second) {
   timeago.setLocaleMessages('id', timeago.IdMessages());
-  return timeago.format(DateTime.fromMillisecondsSinceEpoch(second), locale: 'fr', allowFromNow: true);
+  return timeago.format(DateTime.fromMillisecondsSinceEpoch(second), locale: 'id', allowFromNow: true);
 }
 
 List _longMonth = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -79,4 +79,8 @@ String _convertToLocalMonth(int month, bool shortMonth) {
 
 String tanggal(DateTime date, {bool shortMonth=false}) {
 	return "${date.day} ${_convertToLocalMonth(date.month, shortMonth)} ${date.year}";
+}
+
+String tanggalDanJam(DateTime date, {bool shortMonth=false}) {
+	return "${date.day} ${_convertToLocalMonth(date.month, shortMonth)} ${date.year} ${date.hour}:${date.minute}:${date.second}";
 }

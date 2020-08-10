@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
+import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
+import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,7 +14,23 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: ColorBase.pink,
       body: Center(
-        child: Text("Posyandu Remaja Kuncup Melati"),
+        child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            Dictionary.posyandu,
+            style: ConsTextStyle.judulLoginScreen,
+          ),
+          Text(
+            Dictionary.posName,
+            style: ConsTextStyle.judulLoginScreen,
+          ),
+          Text(
+            Dictionary.desa,style: ConsTextStyle.subJudulLoginScreen,
+          ),
+          ],
+        ),
       ),
     );
   }

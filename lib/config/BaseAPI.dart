@@ -1,5 +1,5 @@
 class BaseAPI {
-  static const String baseAPI = "http://192.168.1.50:3000";
+  static const String baseAPI = "http://192.168.1.9:3000";
   static const String register = '$baseAPI/auth/daftar/';
   static const String login = '$baseAPI/auth/masuk/';
 
@@ -23,4 +23,10 @@ class BaseAPI {
 
   // Saran Menu //
   static const String saranMenu = '$baseAPI/api/saran/';
+  static const String saranCustom = '$baseAPI/api/saran-custom/';
+
+  // Informasi dan Banner //
+  static const String getInformasi = '$baseAPI/api/informasi/';
+
+  static const String getBanner = '$baseAPI/api/banner/';
 }

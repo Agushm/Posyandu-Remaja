@@ -15,13 +15,13 @@ class Aktifitas {
     int aktifitasId;
     String kode;
     String jnsKelamin;
-    int nilai;
+    double nilai;
 
     factory Aktifitas.fromJson(Map<String, dynamic> json) => Aktifitas(
         aktifitasId: json["aktifitas_ID"],
         kode: json["kode"],
         jnsKelamin: json["jns_kelamin"],
-        nilai: json["nilai"],
+        nilai: double.parse(json["nilai"].toString()),
     );
 
     Map<String, dynamic> toJson() => {

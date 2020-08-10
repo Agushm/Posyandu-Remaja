@@ -5,7 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dimens.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Banner.dart';
 import 'package:posyandu_kuncup_melati/components/Skeleton.dart';
+import 'package:posyandu_kuncup_melati/models/banner.dart' as banner;
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BannerListSlider extends StatefulWidget {
@@ -16,19 +19,15 @@ class BannerListSlider extends StatefulWidget {
 class BannerListSliderState extends State<BannerListSlider> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance
-          .collection('banners')
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return Consumer<BannerProvider>(
+      
+      builder: (context, prov,_) {
+        if(prov.banner == null){
+          prov.getBanner();
+          return _buildLoading();
+        } 
+            return _buildSlider(prov.banner);
         
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return _buildLoading();
-          default:
-            return _buildSlider(snapshot);
-        }
       },
     );
   }
@@ -55,15 +54,15 @@ class BannerListSliderState extends State<BannerListSlider> {
     );
   }
 
-  _buildSlider(AsyncSnapshot<QuerySnapshot> snapshot) {
+  _buildSlider(List<banner.Banner> data) {
     return CarouselSlider(
       initialPage: 0,
-      enableInfiniteScroll: snapshot.data.documents.length > 1 ? true : false,
+      enableInfiniteScroll: data.length > 1 ? true : false,
       aspectRatio: 21 / 9,
-      viewportFraction: snapshot.data.documents.length > 1 ? 0.8 : 0.95,
-      autoPlay: snapshot.data.documents.length > 1 ? true : false,
+      viewportFraction: data.length > 1 ? 0.8 : 0.95,
+      autoPlay: data.length > 1 ? true : false,
       autoPlayInterval: Duration(seconds: 5),
-      items: snapshot.data.documents.map((DocumentSnapshot document) {
+      items: data.map((banner.Banner document) {
         return Builder(builder: (BuildContext context) {
           return GestureDetector(
             child: Container(
@@ -72,7 +71,7 @@ class BannerListSliderState extends State<BannerListSlider> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: CachedNetworkImage(
-                    imageUrl: document['imageUrl'],
+                    imageUrl: document.imageUrl,
                     imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -80,7 +79,7 @@ class BannerListSliderState extends State<BannerListSlider> {
                                 topRight: Radius.circular(5.0)),
                             image: DecorationImage(
                               image: imageProvider,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -100,8 +99,8 @@ class BannerListSliderState extends State<BannerListSlider> {
               ),
             ),
             onTap: () {
-              if (document['actionUrl'] != null) {
-                _clickAction(document['actionUrl']);
+              if (document.content != null) {
+                _clickAction(document.content);
                 // AnalyticsHelper.setLogEvent(Analytics.tappedBanner,
                 //     <String, dynamic>{'url': document['action_url']});
               }

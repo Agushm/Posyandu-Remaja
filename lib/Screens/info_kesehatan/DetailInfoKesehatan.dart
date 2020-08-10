@@ -11,10 +11,11 @@ import 'package:posyandu_kuncup_melati/Screens/info_kesehatan/InfoKesehatan.dart
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatText.dart';
 import 'package:posyandu_kuncup_melati/components/ImagePreviewScreen.dart';
+import 'package:posyandu_kuncup_melati/models/informasi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailInfoKesehatan extends StatefulWidget {
-  final DocumentSnapshot documents;
+  final Informasi documents;
   final String info;
   DetailInfoKesehatan({this.documents, this.info});
   @override
@@ -54,7 +55,7 @@ class _DetailInfoKesehatanState extends State<DetailInfoKesehatan> {
                         width: MediaQuery.of(context).size.width,
                         color: Colors.grey,
                         child: CachedNetworkImage(
-                          imageUrl: widget.documents['imageUrl'],
+                          imageUrl: widget.documents.imageUrl,
                           placeholder: (context, url) => Center(
                               heightFactor: 10.2,
                               child: CupertinoActivityIndicator()),
@@ -73,7 +74,7 @@ class _DetailInfoKesehatanState extends State<DetailInfoKesehatan> {
                           MaterialPageRoute(
                               builder: (_) => ImagePreviewScreen(
                                     Dictionary.imageTag,
-                                    imageUrl: widget.documents['imageUrl'],
+                                    imageUrl: widget.documents.imageUrl,
                                   )));
                     },
                   ),
@@ -84,7 +85,7 @@ class _DetailInfoKesehatanState extends State<DetailInfoKesehatan> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.documents['title'],
+                          widget.documents.judul,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 18.0,
@@ -95,18 +96,17 @@ class _DetailInfoKesehatanState extends State<DetailInfoKesehatan> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              FormatText.kategoriKesehatan(widget.documents['category']),
+                              FormatText.kategoriKesehatan(widget.documents.kategori),
                               style: TextStyle(fontSize: 12.0),
                             ),
                             Text(
-                                formatTglFromUnix(
-                                    int.parse(widget.documents['published_at'])),
+                                tanggal(widget.documents.createdAt),
                                 style: TextStyle(fontSize: 12.0))
                           ],
                         ),
                         SizedBox(height: 10.0),
                         Html(
-                            data: widget.documents['content'],
+                            data: widget.documents.content,
                             defaultTextStyle:
                                 TextStyle(color: Colors.black, fontSize: 15.0),
                             customTextAlign: (dom.Node node) {

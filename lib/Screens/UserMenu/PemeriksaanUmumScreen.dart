@@ -2,9 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
-import 'package:posyandu_kuncup_melati/Providers/PemeriksaanUmum.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Periksa.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/DetailPemeriksaanUmum.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:provider/provider.dart';
@@ -225,7 +224,7 @@ class _UserPemeriksaanUmumState extends State<UserPemeriksaanUmum> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Center(
-                                      child: Text(formatTgl(DateTime.parse(p.tglPeriksa)),textAlign: TextAlign.center,style: TextStyle(
+                                      child: Text(tanggal(DateTime.parse(p.tglPeriksa)),textAlign: TextAlign.center,style: TextStyle(
                                         color:ColorBase.white,
                                         fontFamily: FontsFamily.productSans,
                                         fontSize:20,

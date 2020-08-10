@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Periksa.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Periksa.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/EditPeriksaUmum.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/models/Periksa.dart';

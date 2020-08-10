@@ -6,12 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/InformasiProvider.dart';
 import 'package:posyandu_kuncup_melati/Screens/info_kesehatan/DetailInfoKesehatan.dart';
 import 'package:posyandu_kuncup_melati/Screens/info_kesehatan/InfoKesehatan.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/components/RoundedButton.dart';
 import 'package:posyandu_kuncup_melati/components/Skeleton.dart';
 import 'package:posyandu_kuncup_melati/components/infromationDetail.dart';
+import 'package:posyandu_kuncup_melati/models/informasi.dart';
+import 'package:provider/provider.dart';
 
 class InfoKesehatanScreen extends StatefulWidget {
   final String kesehatan;
@@ -27,29 +30,21 @@ class InfoKesehatanScreen extends StatefulWidget {
 class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
   @override
   Widget build(BuildContext context) {
-     return StreamBuilder<QuerySnapshot>(
-       stream: widget.kesehatan == Dictionary.informasiRemaja
-          ? Firestore.instance.collection('info_kesehatan')
-          .where("category", isEqualTo: "remaja")
-          .orderBy('published_at', descending: true).snapshots()
-          : Firestore.instance.collection('info_kesehatan')
-          .where("category", isEqualTo: "umum")
-          .orderBy('published_at', descending: true).snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return _buildLoading();
-          default:
-            return widget.maxLength != null
-                ? _buildContent(snapshot)
-                : _buildContentList(snapshot);
+     return Consumer<InformasiProvider>(
+      builder: (context,prov,_) {
+        if(prov.informasi == null){
+          prov.getInformasi();
+          return _buildLoading();
         }
+            return widget.maxLength != null
+                ? _buildContent(prov.informasi)
+                : _buildContentList(prov.informasi);
+        
       },
     );
   }
 
-  _buildContent(AsyncSnapshot<QuerySnapshot> snapshot) {
+  _buildContent(List<Informasi> data) {
     return Container(
       width: MediaQuery.of(context).size.width-80,
       child: Card(
@@ -62,12 +57,12 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
             ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: snapshot.data.documents.length > 3
+                itemCount: data.length > 3
                     ? 3
-                    : snapshot.data.documents.length,
+                    : data.length,
                 padding: const EdgeInsets.only(bottom: 10.0),
                 itemBuilder: (BuildContext context, int index) {
-                  var document = snapshot.data.documents[index];
+                  var document = data[index];
                   return designNewsHome(document);
                 },
                 separatorBuilder: (BuildContext context, int dex) => Divider()),
@@ -99,7 +94,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
     );
   }
 
-  Widget designNewsHome(DocumentSnapshot document) {
+  Widget designNewsHome(Informasi document) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: RaisedButton(
@@ -126,7 +121,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: document['imageUrl'],
+                      imageUrl: document.imageUrl,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Center(
                           heightFactor: 4.2,
@@ -149,7 +144,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        document['title'],
+                        document.judul,
                         style: TextStyle(
                             fontSize: 16.0, fontWeight: FontWeight.w600),
                         textAlign: TextAlign.left,
@@ -164,13 +159,13 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                             children: <Widget>[
                               
                                   Text(
-                                    document['category'],
+                                    document.kategori,
                                     style: TextStyle(
                                         fontSize: 12.0, color: Colors.grey),
                                   ),
                                 
                               Text(
-                                formatTglFromUnix(int.parse(document['published_at'])),
+                                tanggal(document.createdAt),
                                 style: TextStyle(
                                     fontSize: 12.0, color: Colors.grey),
                               ),
@@ -185,7 +180,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
     );
   }
 
-  Widget designListNews(DocumentSnapshot document) {
+  Widget designListNews(Informasi document) {
     return Card(
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -203,7 +198,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: document['imageUrl'],
+                      imageUrl: document.imageUrl,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Center(
                           heightFactor: 4.2,
@@ -225,7 +220,7 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        document['title'],
+                        document.judul,
                         style: TextStyle(
                             fontSize: 16.0, fontWeight: FontWeight.w600),
                         textAlign: TextAlign.left,
@@ -238,14 +233,12 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                                   Text(
-                                    document['category'],
+                                    document.kategori,
                                     style: TextStyle(
                                         fontSize: 12.0, color: Colors.grey),
                                   ),
                                 
-                              Text(
-                                 DateFormat('dd MMM yyyy kk:mm')
-                          .format(DateTime.fromMillisecondsSinceEpoch(int.parse(document['published_at']))),
+                              Text(tanggal(document.createdAt),
                                 style: TextStyle(
                                     fontSize: 12.0, color: Colors.grey),
                               ),
@@ -271,12 +264,12 @@ class _InfoKesehatanScreenState extends State<InfoKesehatanScreen> {
     );
   }
 
-  _buildContentList(AsyncSnapshot<QuerySnapshot> snapshot) {
+  _buildContentList(List<Informasi> data) {
     return ListView.builder(
-      itemCount: snapshot.data.documents.length,
+      itemCount: data.length,
       padding: const EdgeInsets.only(bottom: 10.0),
       itemBuilder: (BuildContext context, int index) {
-        var document = snapshot.data.documents[index];
+        var document = data[index];
         return designListNews(document);
       },
     );

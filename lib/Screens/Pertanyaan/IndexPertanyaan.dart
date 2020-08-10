@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Pertanyaan.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Pertanyaan.dart';
 import 'package:posyandu_kuncup_melati/models/pertanyaan.dart';
 import 'package:provider/provider.dart';
 

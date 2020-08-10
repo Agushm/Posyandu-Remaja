@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/SaranMenuProvider.dart';
+import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
+import 'package:posyandu_kuncup_melati/models/menu.dart';
+import 'package:provider/provider.dart';
 
 class SaranMenuScreen extends StatefulWidget {
-  final String periksaID;
-  SaranMenuScreen(this.periksaID);
   @override
   _SaranMenuScreenState createState() => _SaranMenuScreenState();
 }
 
 class _SaranMenuScreenState extends State<SaranMenuScreen> {
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,30 +22,77 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
         elevation: 0,
         title: Text("Saran Menu"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 20,
+      body: Consumer<SaranMenuProvider>(
+        builder: (context, prov, _) {
+          if (prov.error && prov.dataPeriksa != null) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "Anda belum mengisi kuisoner pemeriksaan terbaru",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                _buildData("Tanggal periksa",
+                    tanggal(DateTime.parse(prov.dataPeriksa.tglPeriksa))),
+                _buildData("Tinggi Badan", prov.dataPeriksa.tb),
+                _buildData("Berat Badan", prov.dataPeriksa.bb),
+                _buildData("Indeks Masa Tubuh", prov.dataPeriksa.imt),
+                _buildData("Kategori IMT", prov.dataPeriksa.kategoriImt),
+              ],
+            ));
+          }
+          if (prov.dataPeriksa == null && prov.pokok == null) {
+            prov.getSaranMakanan();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                _buildData("Tanggal periksa",
+                    tanggal(DateTime.parse(prov.dataPeriksa.tglPeriksa))),
+                _buildData("Aktifitas", prov.dataAktifitas.kode),
+                _buildData("BMR", "${prov.dataJawaban.bmr} kkal"),
+                _buildData("Kebutuhan kalori perhari",
+                    "${prov.dataJawaban.kalori} kkal"),
+                prov.dataPeriksa.kategoriImt == "normal"
+                    ? Container()
+                    : prov.dataPeriksa.kategoriImt == "kegemukan" ||
+                            prov.dataPeriksa.kategoriImt == "obesitas"
+                        ? _buildData("Saran penurunan",
+                            "${prov.dataJawaban.kalori - 500} - ${prov.dataJawaban.kalori - 300} kkal")
+                        : _buildData("Saran kenaikan",
+                            "${prov.dataJawaban.kalori + 300} - ${prov.dataJawaban.kalori + 500} kkal"),
+                SizedBox(
+                  height: 20,
+                ),
+                _buildMenuMakanan("Menu Sarapan", prov.sarapan),
+                _buildMenuMakanan("Menu Siang", prov.siang),
+                _buildMenuMakanan("Menu Malam", prov.malam),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: _buildData("TOTAL", "${prov.totalKaloriMakan} kkal"),
+                ),
+                SizedBox(
+                  height: 100,
+                )
+              ],
             ),
-            _buildData("Tanggal periksa", "02 Agustus 2020"),
-            _buildData("Kebutuhan kalori perhari", "2000 kkal"),
-            _buildData("Saran penurunan", "1500 - 1700 kkal"),
-            SizedBox(
-              height: 20,
-            ),
-            _buildMenuMakanan("Menu Sarapan"),
-            _buildMenuMakanan("Menu Siang"),
-            _buildMenuMakanan("Menu Malam"),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: _buildData("TOTAL", "1500 kkal"),
-            ),
-            SizedBox(
-              height: 100,
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -105,7 +154,7 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
     );
   }
 
-  Widget _buildMenuMakanan(String waktuMakan) {
+  Widget _buildMenuMakanan(String waktuMakan, List<Menu> menu) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: Column(
@@ -138,13 +187,12 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildListItemMenuMakan(
-                    "Makanan Pokok", "Bubur Ayam", "200 kkal"),
-                _buildListItemMenuMakan("Lauk", "Tempe", "80 kkal"),
-                _buildListItemMenuMakan("Buah", "Pisang Raja", "126 kkal"),
-                _buildListItemMenuMakan("Minuman", "Teh Hangat", "80 kkal"),
-              ],
+              children: menu
+                  .map(
+                    (e) => _buildListItemMenuMakan(
+                        e.jenis, e.namaMakanan, "${e.jmlKalori} kkal"),
+                  )
+                  .toList(),
             ),
           )
         ],

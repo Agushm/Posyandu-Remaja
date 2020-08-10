@@ -7,7 +7,7 @@ import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
-import 'package:posyandu_kuncup_melati/Node_Providers/Auth.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
 import 'package:posyandu_kuncup_melati/components/InWebView.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,7 +63,7 @@ class _MenuListState extends State<MenuList> {
           _buildButtonSVGColumn('${Environment.iconAssets}food.svg',
               'Saran Menu', NavigationConstants.SaranMenu),
           _buildButtonSVGColumn('${Environment.iconAssets}rating.svg',
-              'Custom Menu Makanan', NavigationConstants.Remainder),
+              'Custom Menu Makanan', NavigationConstants.SaranCustom),
         ],
       ),
     );

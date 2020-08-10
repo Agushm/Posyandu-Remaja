@@ -42,8 +42,8 @@ class Jawaban {
         bmr: json["bmr"].toDouble(),
         kalori: json["kalori"].toDouble(),
         createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        deletedAt: DateTime.parse(json["deleted_at"]),
+        // updatedAt: DateTime.parse(json["updated_at"]),
+        // deletedAt: DateTime.parse(json["deleted_at"]),
     );
 
     Map<String, dynamic> toJson() => {
