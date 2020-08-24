@@ -11,6 +11,7 @@ import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanLainScreen.da
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/PemeriksaanUmumScreen.dart';
 import 'package:posyandu_kuncup_melati/Screens/UserMenu/Remainder.dart';
 import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
+import 'package:posyandu_kuncup_melati/Screens/messages/home_screen.dart';
 import 'package:posyandu_kuncup_melati/Services/SharedPref.dart';
 import 'package:posyandu_kuncup_melati/components/InWebView.dart';
 import 'package:posyandu_kuncup_melati/components/infromationDetail.dart';
@@ -69,6 +70,8 @@ Route generateRoutes(RouteSettings settings) {
       return buildRoute(settings, AdminPemeriksaanScreen());
     case NavigationConstants.Welcome:
       return buildRoute(settings, WelcomeScreen());
+    case NavigationConstants.Konsultasi:
+      return buildRoute(settings, ChatHomeScreen());
     case NavigationConstants.InformationDetail:
       return buildRoute(
           settings,

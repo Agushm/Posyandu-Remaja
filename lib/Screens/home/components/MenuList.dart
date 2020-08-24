@@ -59,7 +59,7 @@ class _MenuListState extends State<MenuList> {
           _buildButtonColumn('${Environment.iconAssets}report.png',
               'Daftar Pemeriksaan', NavigationConstants.PeriksaUmum),
           _buildButtonSVGColumn('${Environment.iconAssets}doctor.svg',
-              'Konsultasi', NavigationConstants.Remainder),
+              'Konsultasi', NavigationConstants.Konsultasi),
           _buildButtonSVGColumn('${Environment.iconAssets}food.svg',
               'Saran Menu', NavigationConstants.SaranMenu),
           _buildButtonSVGColumn('${Environment.iconAssets}rating.svg',

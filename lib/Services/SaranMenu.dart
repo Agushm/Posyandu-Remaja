@@ -44,6 +44,11 @@ class SaranMenu {
         minuman.forEach((e) {
           loadMinuman.add(Menu.fromJson(e));
         });
+        final selingan = resData["selingan"] as List;
+        List<Menu> loadSelingan= [];
+        selingan.forEach((e) {
+          loadSelingan.add(Menu.fromJson(e));
+        });
         Periksa dataPeriksa = Periksa(
             tglPeriksa: resData["dataPeriksa"]["tgl_periksa"],
             tb: resData["dataPeriksa"]["tb"].toString(),
@@ -62,6 +67,7 @@ class SaranMenu {
           "sayur": loadSayur,
           "buah": loadBuah,
           "minuman": loadMinuman,
+          "selingan": loadSelingan,
           "totalKalori": resData["totalKalori"]
         };
       } else {
@@ -105,8 +111,8 @@ class SaranMenu {
           "dataPeriksa": dataPeriksa,
           "dataJawaban": dataJawaban,
           "dataAktifitas": dataAktifitas,
-          "minKalori": resData["minKalori"],
-          "maxKalori": resData["maxKalori"]
+          "minKalori": resData["minKalori"].toString(),
+          "maxKalori": resData["maxKalori"].toString()
         };
       } else {
         if (resData["dataPeriksa"] != null) {
@@ -120,6 +126,30 @@ class SaranMenu {
         } else {
           return null;
         }
+      }
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  static Future<List<Menu>> getPilihanMenu(String jenis) async {
+    final token = await SharedPref.getToken();
+    final uri = BaseAPI.getMenu + '$jenis';
+    try {
+      print(uri);
+      final res = await http.get(uri, headers: bearerHeader(token));
+      print(res.body);
+      final resData = json.decode(res.body);
+      if (resData["status"] == "OK") {
+        final data = resData["data"] as List;
+        List<Menu> loaded = [];
+        data.forEach((e) {
+          loaded.add(Menu.fromJson(e));
+        });
+        return loaded;
+      } else {
+        return null;
       }
     } catch (err) {
       print(err);

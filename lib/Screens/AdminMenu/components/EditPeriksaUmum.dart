@@ -129,7 +129,8 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Edit Pemeriksaan Umum'),
+        title: Text(widget.periksaData == null?
+        'Tambah Pemeriksaan ':'Edit Pemeriksaan'),
       ),
       body: _isLoading
           ? Center(
@@ -162,7 +163,7 @@ class _EditPeriksaUmumState extends State<EditPeriksaUmum> {
                           _tdTextFormField(),
                           _lilaTextFormField(),
                           _ttdTextFormField(),
-                          _hpmtTextFormField(),
+                          //_hpmtTextFormField(),
                           _tindakanTextFormField(),
                         ],
                       ),

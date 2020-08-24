@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:posyandu_kuncup_melati/Services/SharedPref.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/components/ToastMessage.dart';
 import 'package:posyandu_kuncup_melati/config/BaseAPI.dart';
 import 'package:posyandu_kuncup_melati/config/HeaderHttp.dart';
 import 'package:posyandu_kuncup_melati/models/user.dart';
-
 
 class DaftarAnggotaProvider with ChangeNotifier {
   List<UserClass> _items;
@@ -23,9 +23,10 @@ class DaftarAnggotaProvider with ChangeNotifier {
   }
 
   Future<void> fetchDaftarAnggota() async {
+    final token = await SharedPref.getToken();
     var url = BaseAPI.anggota;
     try {
-      var res = await http.get(url, headers: bearerHeader(null));
+      var res = await http.get(url, headers: bearerHeader(token));
       var resData = json.decode(res.body);
       print(resData);
       if (resData == null) {
@@ -60,12 +61,12 @@ class DaftarAnggotaProvider with ChangeNotifier {
       DateTime tglLahir,
       String tempatLahir,
       String role,
-      String active
-      }) async {
+      String active}) async {
     final uri = BaseAPI.tambahAnggota;
+    final token = await SharedPref.getToken();
     try {
       final res = await http.post(uri,
-          headers: bearerHeader(null),
+          headers: bearerHeader(token),
           body: json.encode({
             "nama": nama,
             "tempat_lahir": tempatLahir,
@@ -73,8 +74,8 @@ class DaftarAnggotaProvider with ChangeNotifier {
             "jns_kel": gender,
             "email": email,
             "password": password,
-            "role":role,
-            "active":active
+            "role": role,
+            "active": active
           }));
       final resData = json.decode(res.body);
       print(res.body);
@@ -92,31 +93,30 @@ class DaftarAnggotaProvider with ChangeNotifier {
     }
   }
 
-  Future<String> editAnggota(
-      {
-        String userID,
-        String email,
-      
-      String nama,
-      String gender,
-      DateTime tglLahir,
-      String tempatLahir,
-      String role,
-      String active,
-      }) async {
+  Future<String> editAnggota({
+    String userID,
+    String email,
+    String nama,
+    String gender,
+    DateTime tglLahir,
+    String tempatLahir,
+    String role,
+    String active,
+  }) async {
+    final token = await SharedPref.getToken();
     final uri = BaseAPI.editAnggota;
     try {
       final res = await http.patch(uri,
-          headers: bearerHeader(null),
+          headers: bearerHeader(token),
           body: json.encode({
-            "user_ID":userID,
+            "user_ID": userID,
             "nama": nama,
             "tempat_lahir": tempatLahir,
             "tgl_lahir": formatTglMysql(tglLahir),
             "jns_kel": gender,
             "email": email,
-            "role":role,
-            "active":active,
+            "role": role,
+            "active": active,
           }));
       final resData = json.decode(res.body);
       print(res.body);

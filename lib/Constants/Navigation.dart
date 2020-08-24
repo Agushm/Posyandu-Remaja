@@ -12,6 +12,7 @@ class NavigationConstants{
   static const String Remainder = "/remainder";
   static const String SaranMenu = "/saranMenu";
   static const String SaranCustom = "/saranCustom";
+  static const String Konsultasi= "/konsultasi";
   static const String AdminPemeriksaan = "/adminPemeriksaan";
   static const String BuatPengumuman = "/buatPengumuman";
   static const String Browser = "/browser";

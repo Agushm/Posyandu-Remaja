@@ -1,8 +1,9 @@
 import 'dart:core';
+import 'package:posyandu_kuncup_melati/models/user.dart';
 import 'package:posyandu_kuncup_melati/models/user_model.dart';
 
 class Message {
-  final User sender;
+  final UserClass sender;
   final String time;
   final String text;
   final bool isLiked;
@@ -17,56 +18,27 @@ class Message {
   });
 
   // YOU - current user
-  static User currentUser = User(
-    id: 0,
-    name: 'Current User',
+  static UserClass currentUser = UserClass(
+    userID: "0",
+    nama: 'Current User',
     imageUrl: 'assets/images/img.jpg',
   );
 
-  // USERS
-  static User ricken = User(
-    id: 1,
-    name: 'Ricken',
+  static UserClass ricken = UserClass(
+    userID: "0",
+    nama: 'Ricken',
     imageUrl: 'assets/images/img.jpg',
   );
-  static User gad = User(
-    id: 2,
-    name: 'Gad',
+
+  static UserClass gad = UserClass(
+    userID: "0",
+    nama: 'Gad',
     imageUrl: 'assets/images/img.jpg',
   );
-  static User emmany = User(
-    id: 3,
-    name: 'Emmany',
-    imageUrl: 'assets/images/img.jpg',
-  );
-  static User brice = User(
-    id: 4,
-    name: 'Brice',
-    imageUrl: 'assets/images/img.jpg',
-  );
-  static User bazolo = User(
-    id: 5,
-    name: 'Bazolo',
-    imageUrl: 'assets/images/img.jpg',
-  );
-  static User annas = User(
-    id: 6,
-    name: 'Annas',
-    imageUrl: 'assets/images/img.jpg',
-  );
-  static User benjamine = User(
-    id: 7,
-    name: 'Benjamine',
-    imageUrl: 'assets/images/img.jpg',
-  );
-  static User emma = User(
-    id: 8,
-    name: 'Emma',
-    imageUrl: 'assets/images/img.jpg',
-  );
+
 
   // FAVORITE CONTACTS
-  static List<User> favorites = [ricken, gad, emmany, bazolo, brice];
+  static List<UserClass> favorites = [ricken, gad];
 
   // EXAMPLE CHATS ON HOME SCREEN
   
@@ -85,48 +57,7 @@ class Message {
       isLiked: false,
       unread: false,
     ),
-    Message(
-      sender: emmany,
-      time: '4:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: false,
-      unread: true,
-    ),
-    Message(
-      sender: annas,
-      time: '2:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: true,
-      unread: true,
-    ),
-    Message(
-      sender: emma,
-      time: '1:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: false,
-      unread: false,
-    ),
-    Message(
-      sender: emmany,
-      time: '4:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: false,
-      unread: true,
-    ),
-    Message(
-      sender: annas,
-      time: '2:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: true,
-      unread: true,
-    ),
-    Message(
-      sender: emma,
-      time: '1:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: false,
-      unread: false,
-    ),
+    
   ];
 
 //
@@ -166,13 +97,7 @@ class Message {
       isLiked: true,
       unread: false,
     ),
-    Message(
-      sender: emmany,
-      time: '4:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: false,
-      unread: true,
-    ),
+    
     Message(
       sender: currentUser,
       time: '2:30 PM',
@@ -180,13 +105,7 @@ class Message {
       isLiked: false,
       unread: true,
     ),
-    Message(
-      sender: emma,
-      time: '1:30 PM',
-      text: 'Hey, how\'s it going? what did you do today',
-      isLiked: true,
-      unread: false,
-    ),
+    
   ];
 
 }

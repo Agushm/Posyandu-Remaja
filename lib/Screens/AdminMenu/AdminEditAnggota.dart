@@ -9,7 +9,7 @@ import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
 import 'package:posyandu_kuncup_melati/Environment/Environment.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
 import 'package:posyandu_kuncup_melati/Providers/Auth.dart';
-import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/WelcomeScreen.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';

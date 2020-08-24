@@ -50,7 +50,7 @@ class PertanyaanProvider with ChangeNotifier {
     return finalJawaban.substring(0,finalJawaban.length-1);
   }
 
-  Future<void> kirimJawaban(String periksaID) async {
+  Future<void> kirimJawaban(BuildContext context,String periksaID) async {
     final user = await SharedPref.getUser();
     final token = await SharedPref.getToken();
     final uri = BaseAPI.simpanJawaban;
@@ -67,6 +67,7 @@ class PertanyaanProvider with ChangeNotifier {
       print(resData);
       if (resData["status"] == "OK") {
         Fluttertoast.showToast(msg: resData["messages"]);
+        Navigator.pop(context);
       } else {
         Fluttertoast.showToast(
             msg: "Gagal menambah data periksa", backgroundColor: Colors.red);

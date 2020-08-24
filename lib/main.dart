@@ -7,13 +7,13 @@ import 'package:posyandu_kuncup_melati/Constants/Dictionary.dart';
 import 'package:posyandu_kuncup_melati/Constants/Navigation.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/Auth.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/Banner.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/ChatProvider.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/CustomMenu.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/InformasiProvider.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/Notification.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/Pertanyaan.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/SaranMenuProvider.dart';
-import 'package:posyandu_kuncup_melati/Providers/Corona.dart';
-import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/Messages.dart';
 import 'package:posyandu_kuncup_melati/Providers/Notifications.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanLain.dart';
@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
 
   initState() {
     super.initState();
+   
     registerFCM();
     configLocalNotification();
   }
@@ -184,7 +185,7 @@ class _MyAppState extends State<MyApp> {
           value: PemeriksaanLainProvider(),
         ),
         ChangeNotifierProvider.value(
-          value: Messages(),
+          value: ChatProvider(),
         ),
         ChangeNotifierProvider(create: (_) => NotificationsProvider()),
       ],

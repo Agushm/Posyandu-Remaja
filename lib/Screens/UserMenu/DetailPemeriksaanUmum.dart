@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
+import 'package:posyandu_kuncup_melati/Screens/SaranMenu/SaranMenuScreen.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/models/Periksa.dart';
 
@@ -120,6 +121,7 @@ class DetailPemeriksaanUmum extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 100,),
           ],
         ),
       ),
@@ -131,7 +133,7 @@ class DetailPemeriksaanUmum extends StatelessWidget {
           padding: EdgeInsets.all(20),
           color: ColorBase.pink,
           onPressed: (){
-
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>SaranMenuScreen()));
         }, child: Text("SARAN MENU",style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

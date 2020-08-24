@@ -73,14 +73,14 @@ class _IndexScreenState extends State<IndexScreen> {
               Text(Dictionary.notifikasi),
             ],
           )),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble, size: 25),
-          title: Column(
-            children: <Widget>[
-              SizedBox(height: 4),
-              Text(Dictionary.message),
-            ],
-          )),
+      // BottomNavigationBarItem(
+      //     icon: Icon(Icons.chat_bubble, size: 25),
+      //     title: Column(
+      //       children: <Widget>[
+      //         SizedBox(height: 4),
+      //         Text(Dictionary.message),
+      //       ],
+      //     )),
       BottomNavigationBarItem(
           icon: Icon(Icons.person, size: 25),
           title: Column(
@@ -123,11 +123,11 @@ class _IndexScreenState extends State<IndexScreen> {
         //AnalyticsHelper.setLogEvent(Analytics.tappedMessage);
         return NotificationScreen();
 
-      case 2:
-        //AnalyticsHelper.setLogEvent(Analytics.tappedMessage);
-        return MessagesHome();
+      // case 2:
+      //   //AnalyticsHelper.setLogEvent(Analytics.tappedMessage);
+      //   return MessagesHome();
 
-      case 3:
+      case 2:
         //AnalyticsHelper.setLogEvent(Analytics.tappedFaq);
         return ProfileScreen();
 

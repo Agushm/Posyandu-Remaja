@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
-import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminEditAnggota.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/AdminPemeriksaanScreen.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';

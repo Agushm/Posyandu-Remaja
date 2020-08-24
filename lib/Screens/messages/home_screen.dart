@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/widgets/category_selector.dart';
-import 'package:posyandu_kuncup_melati/widgets/favorite_contacts.dart';
+import 'package:posyandu_kuncup_melati/widgets/daftarKonsultan.dart';
 import 'package:posyandu_kuncup_melati/widgets/recent_chats.dart';
 class ChatHomeScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
           onPressed: () {},
         ),
         title: Text(
-          'Chats',
+          'Konsultasi',
           style: TextStyle(
             fontSize: 28.0,
             fontWeight: FontWeight.bold,
@@ -38,11 +39,10 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
       ),
       body: Column(
         children: <Widget>[
-          CategorySelector(),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
+                color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
@@ -50,7 +50,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
               ),
               child: Column(
                 children: <Widget>[
-                  FavoriteContacts(),
+                  DaftarKonsultan(),
                   RecentChats(),
                 ],
               ),

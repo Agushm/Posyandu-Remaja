@@ -49,6 +49,7 @@ class _PertanyaanScreenState extends State<PertanyaanScreen> {
                     padding: EdgeInsets.all(15),
                     onPressed: (){
                       prov.kirimJawaban(
+                        context,
                         widget.periksaID
                       );
                   }, child: Text("Simpan Jawaban",style: TextStyle(

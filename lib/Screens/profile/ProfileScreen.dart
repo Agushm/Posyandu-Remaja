@@ -39,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 20,),
+                  _buildBio("ID", u.userID),
                   _buildBio("Nama", u.nama),
                   _buildBio("Jenis Kelamin",
                       u.jnsKelamin == "P" ? "Perempuan" : "Laki-Laki"),

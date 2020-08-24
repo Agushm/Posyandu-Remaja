@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posyandu_kuncup_melati/Constants/Colors.dart';
 import 'package:posyandu_kuncup_melati/Constants/FontFamily.dart';
 import 'package:posyandu_kuncup_melati/Constants/TextStyle.dart';
-import 'package:posyandu_kuncup_melati/Providers/DaftarAnggota.dart';
+import 'package:posyandu_kuncup_melati/ViewModel/DaftarAnggota.dart';
 import 'package:posyandu_kuncup_melati/Providers/PemeriksaanLain.dart';
 import 'package:posyandu_kuncup_melati/Providers/User.dart';
 import 'package:posyandu_kuncup_melati/Screens/AdminMenu/components/EditPeriksaLain.dart';
