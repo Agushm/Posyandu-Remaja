@@ -76,12 +76,12 @@ class DetailPemeriksaanUmum extends StatelessWidget {
                 children: <Widget>[
                   _buildDetailPeriksa(
                     title: "Berat Badan",
-                    content: periksa.bb.toString(),
+                    content: periksa.bb.toString()+" kg",
                   ),
                  
                   _buildDetailPeriksa(
                     title: "Tinggi Badan",
-                    content: periksa.tb.toString(),
+                    content: periksa.tb.toString()+" cm",
                   ),
                  
                   _buildDetailPeriksa(

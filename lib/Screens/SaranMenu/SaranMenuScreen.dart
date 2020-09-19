@@ -307,6 +307,10 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
       builder: (context, prov, _) {
         double saranMin;
         double saranMax;
+        if (prov.dataPeriksa.kategoriImt == "normal") {
+          saranMin = prov.dataJawaban.kalori;
+          saranMax = prov.dataJawaban.kalori;
+        }
         if (prov.dataPeriksa.kategoriImt == "kurus") {
           saranMin = prov.dataJawaban.kalori + 300;
           saranMax = prov.dataJawaban.kalori + 500;

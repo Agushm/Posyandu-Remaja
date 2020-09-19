@@ -381,6 +381,10 @@ Widget _buildPesan(){
   return Consumer<CustomMenu>(
     builder: (context,prov,_){
       double saranMin;
+      if (prov.dataPeriksa.kategoriImt == "normal") {
+          saranMin = prov.dataJawaban.kalori;
+          //saranMax = prov.dataJawaban.kalori;
+        }
       if(prov.dataPeriksa.kategoriImt == "kurus"){
         saranMin = prov.dataJawaban.kalori +300;
       }
