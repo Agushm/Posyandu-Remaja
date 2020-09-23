@@ -18,10 +18,10 @@ class Dictionary {
   static String tambahAnggota = "TAMBAH";
   static String editAnggota = "EDIT";
   static String buatAnggota = "BUAT";
-  static String home = "Home";
+  static String home = "Beranda";
   static String notifikasi = "Notifikasi";
   static String message = "Konsultasi";
-  static String profile = "Profile";
+  static String profile = "Profil";
   static String corona = "Update Covid-19 Jawa Tengah";
   static String informasiRemaja= "Remaja";
   static String informasiUmum = "Umum";

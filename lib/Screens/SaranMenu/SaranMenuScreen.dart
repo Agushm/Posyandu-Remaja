@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posyandu_kuncup_melati/Utils/kodeAktifitas.dart';
 import 'package:posyandu_kuncup_melati/ViewModel/SaranMenuProvider.dart';
 import 'package:posyandu_kuncup_melati/Utils/FormatDate.dart';
 import 'package:posyandu_kuncup_melati/models/menu.dart';
@@ -14,6 +15,7 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
   bool _isLoading = false;
   @override
   void initState() {
+    getSaranMenu();
     super.initState();
   }
 
@@ -80,7 +82,7 @@ class _SaranMenuScreenState extends State<SaranMenuScreen> {
                       ),
                       _buildData("Tanggal periksa",
                           tanggal(DateTime.parse(prov.dataPeriksa.tglPeriksa))),
-                      _buildData("Aktifitas", prov.dataAktifitas.kode),
+                      _buildData("Aktifitas", prov.dataAktifitas.kode + " (${keteranganAktifitas(prov.dataAktifitas.kode)})"),
                       _buildData("BMR", "${prov.dataJawaban.bmr} kkal"),
                       _buildData("Kebutuhan kalori perhari",
                           "${prov.dataJawaban.kalori} kkal"),

@@ -1,5 +1,5 @@
 class BaseAPI {
-  static const String baseAPI = "http://192.168.1.13:3030";
+  static const String baseAPI = "http://192.168.1.19:3030";
   static const String register = '$baseAPI/auth/daftar/';
   static const String login = '$baseAPI/auth/masuk/';
 
